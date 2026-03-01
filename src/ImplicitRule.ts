@@ -1,6 +1,6 @@
-import { ImplicitRule as Rule } from 'simple-body-validator'
 import { ValidationRuleCallable } from './Contracts/RuleBuilder'
 import type { Validator } from './Validator'
+import { ImplicitRule as Rule } from './validator/Core'
 
 export abstract class ImplicitRule extends Rule {
     rules: ValidationRuleCallable[] = []

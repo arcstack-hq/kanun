@@ -1,8 +1,8 @@
-import type In from 'simple-body-validator/lib/cjs/rules/in'
-import type NotIn from 'simple-body-validator/lib/cjs/rules/notIn'
-import type Regex from 'simple-body-validator/lib/cjs/rules/regex'
-import type RequiredIf from 'simple-body-validator/lib/cjs/rules/requiredIf'
-import type { Rule } from 'simple-body-validator'
+import type In from '../validator/rules/in'
+import type NotIn from '../validator/rules/notIn'
+import type Regex from '../validator/rules/regex'
+import type RequiredIf from '../validator/rules/requiredIf'
+import type { Rule } from '../validator/Core'
 
 export type ParamableValidationRuleName =
     | 'accepted_if'

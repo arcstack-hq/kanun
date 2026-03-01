@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest'
-import { register, setTranslationObject } from 'simple-body-validator'
+import { register, setTranslationObject } from '../src/validator/Core'
 
 import { ValidationException } from '../src/ValidationException'
 import { Validator } from '../src/Validator'

@@ -1,8 +1,4 @@
-<div align="center">
-  <a href="https://arcstack-hq.github.io/validator"  target="_blank">
-    <img src="https://raw.githubusercontent.com/arcstack-hq/assets/refs/heads/main/logo-full.svg" width="200" alt="Arcstack Logo">
-  </a>
-  <h1 align="center"><a href="https://arcstack-hq.github.io/validator">Arcstack Validator</a></h1>
+# Kanun
 
 [![Framework][ix]][lx]
 [![Validation Package Version][i1]][l1]
@@ -10,16 +6,12 @@
 [![Tests][tei]][tel]
 [![License][lini]][linl]
 
-</div>
-
-# About Arcstack Validator
-
 Lightweight framework-agnostic and TypeScript-first validation library. Provides a rich set of built-in rules, custom rule support, nested data validation, conditional rules, localized error messages, and a flexible API for validating complex data structures in Node.js applications.
 
 ## Installation
 
 ```bash
-npm install @arcstack/validator
+npm install kanun
 ```
 
 ## Features
@@ -47,24 +39,133 @@ npm install @arcstack/validator
 
 ## Usage
 
+### Quick Start
+
+```ts
+import { Validator } from 'kanun';
+
+const validator = new Validator(
+  { email: 'john@example.com', age: 20 },
+  { email: 'required|email', age: 'required|numeric|min:18' },
+);
+
+const passes = await validator.passes();
+
+if (!passes) {
+  console.log(validator.errors().all());
+}
+```
+
+### Throwing Validation Errors
+
+```ts
+import { Validator, ValidationException } from 'kanun';
+
+const validator = Validator.make({ email: '' }, { email: 'required|email' });
+
+try {
+  const data = await validator.validate();
+  console.log(data);
+} catch (error) {
+  if (error instanceof ValidationException) {
+    console.log(error.errors());
+  }
+}
+```
+
+### Custom Messages
+
+```ts
+const validator = new Validator(
+  { email: '' },
+  { email: 'required|email' },
+  {
+    'email.required': 'Email is required.',
+    'email.email': 'Email must be valid.',
+  },
+);
+```
+
+### Nested and Array Validation
+
+```ts
+const validator = new Validator(
+  {
+    user: { name: { first: 'John', last: '' } },
+    users: [{ email: 'good@example.com' }, { email: 'bad' }],
+  },
+  {
+    'user.name.first': 'required|min:2',
+    'user.name.last': 'required|min:2',
+    'users.*.email': 'required|email',
+  },
+);
+```
+
+### Custom Rule Class
+
+```ts
+import { ValidationRule, Validator } from 'kanun';
+
+class StartsWithKanun extends ValidationRule {
+  validate(
+    attribute: string,
+    value: any,
+    fail: (message: string) => void,
+  ): void {
+    if (typeof value !== 'string' || !value.startsWith('kanun')) {
+      fail(`The ${attribute} must start with kanun.`);
+    }
+  }
+}
+
+const validator = new Validator(
+  { slug: 'kanun' },
+  { slug: ['required', new StartsWithKanun()] },
+);
+```
+
+### Database-backed `exists` and `unique`
+
+```ts
+import { Validator, type IDatabaseDriver } from 'kanun';
+
+const driver: IDatabaseDriver = {
+  async exists({ table, column, value, ignore }) {
+    const row = await db.table(table).where(column, value).first();
+    if (!row) return false;
+    if (ignore != null && String(row.id) === String(ignore)) return false;
+    return true;
+  },
+};
+
+Validator.useDatabase(driver);
+
+const validator = new Validator(
+  { username: 'legacy' },
+  { username: 'unique:users,username' },
+);
+```
+
+For the complete guide and API reference, visit the docs site: https://arcstack-hq.github.io/kanun
+
 ## Code of Conduct
 
-In order to ensure that the Arcstack community is welcoming to all, please review and abide by the [Code of Conduct](https://arcstack-hq.github.io/code-of-conduct).
+In order to ensure that the Kanun community is welcoming to all, please review and abide by the [Code of Conduct](https://arcstack-hq.github.io/code-of-conduct).
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Arcstack, please send an e-mail to Legacy via hi@toneflix.net. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Kanun, please send an e-mail to Legacy via hi@toneflix.net. All security vulnerabilities will be promptly addressed.
 
 ## License
 
-All Arcstack packages are open source and licensed under the [MIT license](LICENSE).
+Kanun and all Arcstack packages are open source and licensed under the [MIT license](LICENSE).
 
-[ix]: https://img.shields.io/npm/v/%40arcstack%2Fcore?style=flat-square&label=Framework&color=%230970ce
-[lx]: https://www.npmjs.com/package/@arcstack/core
-[i1]: https://img.shields.io/npm/v/%40arcstack%2Fvalidator?style=flat-square&label=@arcstack/validator&color=%230970ce
-[l1]: https://www.npmjs.com/package/@arcstack/validator
-[d1]: https://img.shields.io/npm/dt/%40arcstack%2Fvalidator?style=flat-square&label=Downloads&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2F%40arcstack%2Fvalidator
-[linl]: https://github.com/arcstack-hq/framework/blob/main/LICENSE
-[lini]: https://img.shields.io/github/license/arcstack/framework
-[tel]: https://github.com/arcstack-hq/framework/actions/workflows/test.yml
-[tei]: https://github.com/arcstack-hq/framework/actions/workflows/test.yml/badge.svg
+[ix]: https://img.shields.io/npm/v/%40kanun?style=flat-square&label=Framework&color=%230970ce
+[i1]: https://img.shields.io/npm/v/%40kanun?style=flat-square&label=kanun&color=%230970ce
+[l1]: https://www.npmjs.com/package/kanun
+[d1]: https://img.shields.io/npm/dt/%40kanun?style=flat-square&label=Downloads&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2F%40kanun
+[linl]: https://github.com/arcstack-hq/kanun/blob/main/LICENSE
+[lini]: https://img.shields.io/github/license/arcstack-hq/kanun
+[tel]: https://github.com/arcstack-hq/kanun/actions/workflows/test.yml
+[tei]: https://github.com/arcstack-hq/kanun/actions/workflows/test.yml/badge.svg

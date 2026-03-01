@@ -1,4 +1,4 @@
-import { type Validator as SimpleBodyValidator, make, register, setTranslationObject } from 'simple-body-validator'
+import { type Validator as SimpleBodyValidator, make, register, setTranslationObject } from './validator/Core'
 
 import { ExtendedRules } from './Rules/ExtendedRules'
 import { MessageBag } from './utilities/MessageBag'

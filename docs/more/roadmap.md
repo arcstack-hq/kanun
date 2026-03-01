@@ -1,10 +1,10 @@
 # Roadmap
 
-The following features are planned to expand Arcstack Validator’s flexibility and production readiness.
+The following features are planned to expand Kanun’s flexibility and production readiness.
 
 ## Plugin System
 
-Introduce a first-class plugin architecture to extend Arcstack Validator without modifying core behavior.
+Introduce a first-class plugin architecture to extend Kanun without modifying core behavior.
 
 The plugin system will allow developers to:
 

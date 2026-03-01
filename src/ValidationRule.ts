@@ -1,8 +1,8 @@
 import { IValidationRule } from './Contracts/IValidationRule'
-import { Rule } from 'simple-body-validator'
 import { RulesForData } from './Contracts/ValidatorContracts'
 import { ValidationRuleCallable } from './Contracts/RuleBuilder'
 import type { Validator } from './Validator'
+import { Rule } from './validator/Core'
 
 export abstract class ValidationRule<
     D extends Record<string, any> = any,

@@ -3,11 +3,11 @@
 layout: home
 
 hero:
-  name: 'Arcstack Validator'
+  name: 'Kanun'
   tagline: Lightweight framework-agnostic and TypeScript-first validation library
   image:
     src: /banner.png
-    alt: Arcstack Validator Banner
+    alt: Kanun Banner
   actions:
     - theme: brand
       text: Get Started

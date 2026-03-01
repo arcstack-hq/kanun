@@ -3,8 +3,8 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   cleanUrls: true,
-  base: '/validator/',
-  title: "Arcstack Validator",
+  base: '/kanun/',
+  title: "Kanun",
   description: "Lightweight framework-agnostic and TypeScript-first validation library",
   head: [
     ['link', { rel: 'icon', href: '/banner.png' }],
@@ -12,12 +12,12 @@ export default defineConfig({
     ['meta', { name: 'description', content: 'Lightweight framework-agnostic and TypeScript-first validation library' }],
     ['meta', { name: 'keywords', content: 'Validation, TypeScript, Framework-agnostic, Lightweight' }],
     ['meta', { name: 'author', content: 'Toneflix' }],
-    ['meta', { property: 'og:title', content: 'Arcstack Validator' }],
+    ['meta', { property: 'og:title', content: 'Kanun' }],
     ['meta', { property: 'og:description', content: 'Lightweight framework-agnostic and TypeScript-first validation library' }],
     ['meta', { property: 'og:image', content: '/banner.png' }],
-    ['meta', { property: 'og:url', content: 'https://arcstack-hq.github.io/validator/' }],
+    ['meta', { property: 'og:url', content: 'https://arcstack-hq.github.io/kanun/' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { name: 'twitter:title', content: 'Arcstack Validator' }],
+    ['meta', { name: 'twitter:title', content: 'Kanun' }],
     ['meta', { name: 'twitter:description', content: 'Lightweight framework-agnostic and TypeScript-first validation library' }],
     ['meta', { name: 'twitter:image', content: '/banner.png' }]
   ],
@@ -25,7 +25,8 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'API', link: '/api/resource' }
+      { text: 'Guide', link: '/guide/getting-started' },
+      { text: 'API', link: '/api/validator' }
     ],
 
     sidebar: [
@@ -34,6 +35,7 @@ export default defineConfig({
         items: [
           { text: 'Getting Started', link: '/guide/getting-started' },
           { text: 'Validation Rules', link: '/guide/validation-rules' },
+          { text: 'Database Driver', link: '/guide/database-driver' },
           { text: 'Custom Rules', link: '/guide/custom-rules' },
           { text: 'Error Handling', link: '/guide/error-handling' },
         ]
@@ -44,6 +46,7 @@ export default defineConfig({
           { text: 'Validator', link: '/api/validator' },
           { text: 'ValidationRule', link: '/api/validation-rule' },
           { text: 'ValidationException', link: '/api/validation-exception' },
+          { text: 'Database Driver Contract', link: '/api/database-driver' },
         ]
       },
       {

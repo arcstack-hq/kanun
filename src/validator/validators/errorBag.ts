@@ -1,0 +1,153 @@
+'use strict';
+
+import { ErrorMessage, Errors, GenericObject, Messages } from '../../Contracts/BaseContract';
+
+class ErrorBag {
+
+    /**
+     * All of the registered messages.
+     */
+    errors: Errors = {};
+
+    /**
+     * All Messages
+     */
+    messages: Messages = {};
+
+    /**
+     * Stores the first error message
+     */
+    firstMessage: string = '';
+
+    /**
+     * Specify whether error types should be returned or no
+     */
+    withErrorTypes: boolean = false;
+
+
+    constructor(errors: Errors = {}, messages: Messages = {}, firstMessage: string = '', withErrorTypes: boolean = false) {
+        this.errors = errors;
+        this.messages = messages;
+        this.firstMessage = firstMessage;
+        this.withErrorTypes = withErrorTypes;
+    }
+
+
+    /**
+     * Set withErrorTypes attribute to true
+     */
+    addErrorTypes (): ErrorBag {
+        this.withErrorTypes = true;
+        return this;
+    }
+
+    /**
+     * Add new recodrs to the errors and messages objects
+     */
+    add (key: string, error: ErrorMessage): void {
+        if (Array.isArray(this.errors[key]) && Array.isArray(this.messages[key])) {
+            this.errors[key].push(error);
+            this.messages[key].push(error.message);
+        } else {
+            this.errors[key] = [error];
+            this.messages[key] = [error.message];
+        }
+
+        this.firstMessage = this.firstMessage || error.message;
+    };
+
+    /**
+     * Get the first error related to a specific key
+     */
+    first (key: string | null = null): string {
+
+        if (!key) {
+            return this.firstMessage;
+        }
+
+        if (this.has(key)) {
+            return this.messages[key][0];
+        }
+
+        return '';
+    };
+
+    /**
+     * Get the error messages keys
+     */
+    keys (): string[] {
+        return Object.keys(this.messages);
+    };
+
+    /**
+     * Get all the messages related to a specific key
+     */
+    get (key: string, withErrorTypes: boolean = this.withErrorTypes): ErrorMessage[] | string[] {
+
+        if (!this.has(key)) {
+            return [];
+        }
+
+        if (withErrorTypes) {
+            return this.errors[key];
+        }
+
+        return this.messages[key];
+    };
+
+    /**
+     * Check if key exists in messages
+     */
+    has (key: string): boolean {
+        return this.messages[key] && this.messages[key].length > 0 ? true : false;
+    };
+
+    /**
+     * Get all error messages
+     */
+    all (allMessages: boolean = true, withErrorTypes = this.withErrorTypes): GenericObject {
+        let messages: GenericObject = withErrorTypes ? { ... this.errors } : { ... this.messages };
+
+        if (!allMessages) {
+            Object.keys(messages).map(attribute => messages[attribute] = messages[attribute][0]);
+        }
+
+        return messages;
+    };
+
+    /**
+     * Remove error messages
+     */
+    clear (keys: string[]): ErrorBag {
+        // if keys array is emppty - remove all error messages
+        if (keys.length === 0) {
+            this.errors = {};
+            this.messages = {};
+            this.firstMessage = '';
+            return this;
+        }
+
+        // Remove error messages for each key
+        keys.forEach(key => {
+            if (this.messages.hasOwnProperty(key)) {
+                delete this.messages[key];
+                delete this.errors[key];
+            }
+        });
+
+        this.firstMessage = '';
+        if (this.keys().length > 0) {
+            this.firstMessage = this.messages[Object.keys(this.messages)[0]][0];
+        }
+        return this;
+    };
+
+    /**
+     * Clone ErrorBag Instance
+     */
+    clone (): ErrorBag {
+        return new ErrorBag({ ...this.errors }, { ...this.messages }, this.firstMessage, this.withErrorTypes);
+    }
+}
+
+export default ErrorBag;

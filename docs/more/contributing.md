@@ -1,6 +1,6 @@
 # Contributing
 
-Arcstack Validator is built to be framework-flexible, type-safe, and production-ready. Contributions should preserve these core principles.
+Kanun is built to be framework-flexible, type-safe, and production-ready. Contributions should preserve these core principles.
 
 ## Philosophy
 
@@ -49,7 +49,7 @@ Use clear, descriptive commit messages:
 
 When reporting bugs, include:
 
-- Arcstack Validator version
+- Kanun version
 - Framework used (Express, H3, etc.)
 - Minimal reproduction example
 - Expected vs actual behavior

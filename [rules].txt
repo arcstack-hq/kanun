@@ -1,4 +1,4 @@
-[simple-body-validator]
+[core]
 
 accepted
 accepted_if:anotherfield,value,...
@@ -114,6 +114,6 @@ required_without_all:foo,bar,…
 same:field
 starts_with:foo,bar,… 
 
-[arcstack-validator]
+[kanun]
 exists:table,column
 unique:table,column,except,idColumn
