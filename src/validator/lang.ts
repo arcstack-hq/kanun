@@ -43,7 +43,11 @@ const lang: LangInterface = {
 
     /**
      * Get messages for lang 
+     * 
+     * @param lang 
+     * @returns 
      */
+    // @ts-ignore
     get (lang: string = this.defaultLang): object {
         this.load(lang);
         return this.messages[lang];
@@ -74,7 +78,7 @@ const lang: LangInterface = {
 
         // check if the lang translations exist in the library and load them
         if (locales.hasOwnProperty(lang)) {
-            this.fallbackMessages = mergeDeep(this.fallbackMessages, locales[lang]);
+            this.fallbackMessages = mergeDeep(this.fallbackMessages, locales[lang as never]);
         }
 
         // check if the lang translations exit in the object passed by the user
@@ -101,7 +105,7 @@ const lang: LangInterface = {
 
         // check if the lang translations exist in the library and load them
         if (locales.hasOwnProperty(lang)) {
-            this.messages[lang] = mergeDeep(this.fallbackMessages, locales[lang]);
+            this.messages[lang] = mergeDeep(this.fallbackMessages, locales[lang as never]);
         } else {
             this.messages[lang] = mergeDeep({}, this.fallbackMessages);
         }
