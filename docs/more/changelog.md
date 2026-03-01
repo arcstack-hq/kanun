@@ -13,3 +13,12 @@ The format follows semantic versioning principles.
 ## [0.1.0] - Initial Release
 
 ### Added
+
+- Add ImplicitRule and ValidationRule classes for defining validation rules.
+- Introduce ExtendedRules class with additional validation methods (hex, includes, not_includes, datetime, exists, unique).
+- Create ValidationServiceProvider for managing validation services.
+- Implement ValidationException for structured error handling.
+- Develop MessageBag utility for managing validation messages.
+- Add Validator class to orchestrate validation logic and error reporting.
+- Create tests for Validator and validation rules to ensure functionality.
+- Set up TypeScript configuration and testing environment with Vitest.
