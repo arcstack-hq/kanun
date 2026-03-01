@@ -1,4 +1,4 @@
-import { CustomAttributes, CustomMessages, GenericObject, InitialRule, InitialRules } from '../Contracts/BaseContract';
+import type { CustomAttributes, CustomMessages, GenericObject, InitialRule, InitialRules } from '../Contracts/BaseContract';
 
 import ErrorBag from './validators/errorBag';
 import ImplicitRuleContract from './rules/implicitRuleContract';
