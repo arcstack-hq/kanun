@@ -1,11 +1,10 @@
 'use strict'
 
-import { GenericObject } from 'src/Contracts/BaseContract'
-import Lang from '../lang'
-import { deepFind } from '../utils/object'
+import { GenericObject } from 'src/Contracts/IGeneric'
+import { Lang } from '../Lang'
+import { deepFind } from '../utilities/object'
 
-export default class RuleContract {
-
+export default abstract class IRuleContract {
     /**
      * The validation error message.
      */
@@ -38,7 +37,7 @@ export default class RuleContract {
     /**
      * Set the data under validation.
      */
-    setData (data: object): RuleContract {
+    setData (data: object): this {
         this.data = data
         return this
     };
@@ -46,7 +45,7 @@ export default class RuleContract {
     /**
      * Set the tranlation language
      */
-    setLang (lang: string): RuleContract {
+    setLang (lang: string): this {
         this.lang = lang
         return this
     };

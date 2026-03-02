@@ -1,9 +1,9 @@
-import { GenericObject, ReplaceAttributeInterface } from 'src/Contracts/BaseContract'
-
-import { deepFind } from '../utils/object'
-import { getSize } from '../utils/general'
+import { GenericObject } from 'src/Contracts/IGeneric'
+import { ReplaceAttributeInterface } from 'src/Contracts/BaseContract'
+import { deepFind } from '../utilities/object'
+import { getSize } from '../utilities/general'
 import replaceAttributePayload from '../payloads/replaceAttributePayload'
-import { toDate } from '../utils/date'
+import { toDate } from '../utilities/date'
 
 const replaceAttributes: ReplaceAttributeInterface = {
     /**

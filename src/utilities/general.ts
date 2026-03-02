@@ -1,9 +1,8 @@
 'use strict'
 
-import BaseRule from '../rules/baseRule'
-import ImplicitRuleContract from '../rules/implicitRuleContract'
-import { Rule } from '../../Contracts/BaseContract'
-import RuleContract from '../rules/ruleContract'
+import BaseRule from '../Rules/baseRule'
+import RuleContract from '../Rules/IRuleContract'
+import { TRule } from '../Contracts/BaseContract'
 
 const implicitRues: string[] = [
     'accepted', 'accepted_if', 'declined', 'declined_if',
@@ -86,9 +85,9 @@ export function isSizeRule (rule: string): boolean {
 /**
  * Check if rule implies that the field is required
  */
-export function isImplicitRule (rule: Rule): boolean {
+export function isImplicitRule (rule: TRule): boolean {
 
-    if (rule instanceof ImplicitRuleContract) {
+    if (rule instanceof RuleContract && (rule as any).__isImplicitRule === true) {
         return true
     }
 

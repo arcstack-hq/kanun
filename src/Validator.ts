@@ -1,18 +1,16 @@
-import { type Validator as SimpleBodyValidator, make, register, setTranslationObject } from './validator/Core'
+import { BaseValidationRuleClass, CustomValidationRules } from './Contracts/RuleBuilder'
+import { DotPaths, MessagesForRules, RulesForData } from './Contracts/ValidatorContracts'
+import { make, register } from './Core'
 
+import type BaseValidator from './BaseValidator'
 import { ExtendedRules } from './Rules/ExtendedRules'
+import type { IDatabaseDriver } from './Contracts/IDatabaseDriver'
+import { IValidator } from './Contracts/IValidator'
+import Lang from './Lang'
 import { MessageBag } from './utilities/MessageBag'
 import { ValidationException } from './ValidationException'
 import { ValidationRule } from './ValidationRule'
-import { BaseValidationRuleClass, CustomValidationRules } from './Contracts/RuleBuilder'
-import { DotPaths, MessagesForRules, RulesForData } from './Contracts/ValidatorContracts'
-import { IValidator } from './Contracts/IValidator'
 import { ValidationRuleSet } from './Contracts/ValidationRuleName'
-import type { IDatabaseDriver } from './Contracts/IDatabaseDriver'
-
-register('telephone', function (value) {
-    return /^\d{3}-\d{3}-\d{4}$/.test(value)
-})
 
 export class Validator<
     D extends Record<string, any> = any,
@@ -28,7 +26,7 @@ export class Validator<
     private _errors: MessageBag
     private passing: boolean = false
     private executed: boolean = false
-    private instance?: SimpleBodyValidator
+    private instance?: BaseValidator
     private databaseDriver?: IDatabaseDriver
     private errorBagName = 'default'
     private registeredCustomRules: CustomValidationRules[] = [
@@ -41,6 +39,11 @@ export class Validator<
         rules: R,
         messages: Partial<Record<MessagesForRules<R>, string>> = {}
     ) {
+
+        register('telephone', function (value) {
+            return /^\d{3}-\d{3}-\d{4}$/.test(value)
+        })
+
         this.data = data
         this.rules = rules
         this.#messages = messages
@@ -273,7 +276,7 @@ export class Validator<
                 for (const rule of reged.rules) {
                     register(rule.name, rule.validator)
                     if (rule.message) {
-                        setTranslationObject({
+                        Lang.setTranslationObject({
                             en: {
                                 [rule.name]: rule.message,
                             }

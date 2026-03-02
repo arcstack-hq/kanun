@@ -1,9 +1,10 @@
 'use strict'
 
-import { GenericCallable, GenericObject, InitialRule } from '../../Contracts/BaseContract'
+import type { GenericCallable, GenericObject } from 'src/Contracts/IGeneric'
 
-import RuleContract from './ruleContract'
-import Validator from '../validator'
+import { InitialRule } from '../Contracts/BaseContract'
+import RuleContract from './IRuleContract'
+import Validator from '../BaseValidator'
 
 class Password extends RuleContract {
 

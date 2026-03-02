@@ -5,28 +5,28 @@ import {
     CustomErrors,
     CustomMessages,
     ErrorMessage,
-    GenericObject,
     ImplicitAttributes,
     InitialRules,
-    Rule,
-    Rules
-} from '../Contracts/BaseContract'
-import { deepFind, deepSet, dotify, isObject } from './utils/object'
-import { getFormattedAttribute, getKeyCombinations, getMessage } from './utils/formatMessages'
-import { getNumericRules, isImplicitRule } from './utils/general'
+    Rules,
+    TRule
+} from './Contracts/BaseContract'
+import { deepFind, deepSet, dotify, isObject } from './utilities/object'
+import { getFormattedAttribute, getKeyCombinations, getMessage } from './utilities/formatMessages'
+import { getNumericRules, isImplicitRule } from './utilities/general'
 
 import ErrorBag from './validators/errorBag'
-import Lang from './lang'
-import Password from './rules/password'
-import RuleContract from './rules/ruleContract'
-import { buildValidationMethodName } from './utils/build'
+import { GenericObject } from 'src/Contracts/IGeneric'
+import Lang from './Lang'
+import Password from './Rules/password'
+import RuleContract from './Rules/IRuleContract'
+import { buildValidationMethodName } from './utilities/build'
 import replaceAttributePayload from './payloads/replaceAttributePayload'
 import replaceAttributes from './validators/replaceAttributes'
 import validateAttributes from './validators/validateAttributes'
 import validationData from './validators/validationData'
 import validationRuleParser from './validators/validationRuleParser'
 
-class Validator {
+export class BaseValidator {
 
     /**
      * The lang used to return error messages
@@ -92,19 +92,19 @@ class Validator {
         this.messages = new ErrorBag()
     };
 
-    setData (data: object): Validator {
+    setData (data: object): this {
         this.data = data
         this.addRules(this.initalRules)
         return this
     };
 
-    setRules (rules: InitialRules): Validator {
+    setRules (rules: InitialRules): this {
         this.addRules(rules)
         this.initalRules = rules
         return this
     };
 
-    setLang (lang: string): Validator {
+    setLang (lang: string): this {
         this.lang = lang
         return this
     };
@@ -113,17 +113,17 @@ class Validator {
         return this.lang
     }
 
-    setCustomMessages (customMessages: CustomMessages = {}): Validator {
+    setCustomMessages (customMessages: CustomMessages = {}): this {
         this.customMessages = dotify(customMessages)
         return this
     };
 
-    setCustomAttributes (customAttributes: CustomAttributes = {}): Validator {
+    setCustomAttributes (customAttributes: CustomAttributes = {}): this {
         this.customAttributes = dotify(customAttributes)
         return this
     };
 
-    stopOnFirstFailure (stopOnFirstFailure: boolean = true): Validator {
+    stopOnFirstFailure (stopOnFirstFailure: boolean = true): this {
         this.stopOnFirstFailureFlag = stopOnFirstFailure
         return this
     };
@@ -392,7 +392,7 @@ class Validator {
     /**
      * validate a given attribute against a rule.
      */
-    private validateAttribute (attribute: string, rule: Rule): void | Promise<void> {
+    private validateAttribute (attribute: string, rule: TRule): void | Promise<void> {
 
         let parameters: string[] = [];
 
@@ -525,7 +525,7 @@ class Validator {
     /**
      * Determine if the attribute is validatable.
      */
-    private isValidatable (attribute: string, value: any, rule: Rule): boolean {
+    private isValidatable (attribute: string, value: any, rule: TRule): boolean {
         return this.presentOrRuleIsImplicit(attribute, value, rule) &&
             this.passesOptionalCheck(attribute) &&
             this.isNotNullIfMarkedAsNullable(attribute, rule)
@@ -535,7 +535,7 @@ class Validator {
     /**
      * Determine if the field is present, or the rule implies required.
      */
-    private presentOrRuleIsImplicit (attribute: string, value: any, rule: Rule) {
+    private presentOrRuleIsImplicit (attribute: string, value: any, rule: TRule) {
         if (typeof value === 'string' && value.trim() === '') {
             return isImplicitRule(rule)
         }
@@ -561,7 +561,7 @@ class Validator {
     /**
      * Determine if the attribute fails the nullable check.
      */
-    private isNotNullIfMarkedAsNullable (attribute: string, rule: Rule): boolean {
+    private isNotNullIfMarkedAsNullable (attribute: string, rule: TRule): boolean {
         if (isImplicitRule(rule) || !validationRuleParser.hasRule(attribute, ['nullable'], this.rules)) {
             return true
         }
@@ -606,4 +606,4 @@ class Validator {
 
 }
 
-export default Validator
+export default BaseValidator

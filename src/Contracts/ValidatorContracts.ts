@@ -53,4 +53,4 @@ export type MessagesForRules<Rules extends Record<string, any>> = {
  */
 export type RulesForData<D extends Record<string, any>> = Partial<
     Record<DotPaths<D>, ValidationRuleSet>
->
+> 

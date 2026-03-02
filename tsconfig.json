@@ -1,17 +1,23 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "./dist",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "target": "es2022",
     "module": "es2022",
-    "moduleResolution": "bundler",
+    "target": "es2022",
+    "lib": ["es2022", "DOM"],
     "esModuleInterop": true,
-    "strict": true,
     "allowJs": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "strict": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "types": ["node", "vitest"],
+    "baseUrl": ".",
+    "paths": {
+      "karun": ["src/index.ts"]
+    }
   },
   "exclude": [
     "**/console/bin",

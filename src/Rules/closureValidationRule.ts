@@ -2,7 +2,7 @@
 
 import { GenericCallable, ValidationCallback } from '../../Contracts/BaseContract'
 
-import RuleContract from './ruleContract'
+import RuleContract from './IRuleContract'
 
 class ClosureValidationRule extends RuleContract {
 

@@ -1,6 +1,8 @@
 'use strict'
 
-import { ErrorMessage, Errors, GenericObject, Messages } from '../../Contracts/BaseContract'
+import { ErrorMessage, Errors, Messages } from '../../Contracts/BaseContract'
+
+import { GenericObject } from 'src/Contracts/IGeneric'
 
 class ErrorBag {
 

@@ -1,6 +1,6 @@
 'use strict'
 
-import RuleContract from './ruleContract'
+import RuleContract from './IRuleContract'
 
 class Regex extends RuleContract {
 
@@ -20,15 +20,15 @@ class Regex extends RuleContract {
         this.shouldMatch = shouldMatch
     }
 
-    passes(value: any): boolean {
+    passes (value: any): boolean {
         if (this.shouldMatch) {
             return this.regex.test(value)
         }
 
-        return ! this.regex.test(value)
+        return !this.regex.test(value)
     }
 
-    getMessage(): string {
+    getMessage (): string {
         if (this.shouldMatch) {
             return this.trans('regex')
         }

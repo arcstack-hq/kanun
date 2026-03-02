@@ -1,13 +1,10 @@
+import { Lang, ValidationException, Validator, register } from 'src'
 import { beforeAll, describe, expect, it } from 'vitest'
-import { register, setTranslationObject } from '../src/validator/Core'
-
-import { ValidationException } from '../src/ValidationException'
-import { Validator } from '../src/Validator'
 
 describe('Validator.make', () => {
     beforeAll(() => {
 
-        setTranslationObject({
+        Lang.setTranslationObject({
             en: {
                 uuid: 'The :attribute must be a valid UUID.',
             }

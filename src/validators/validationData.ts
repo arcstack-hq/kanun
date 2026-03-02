@@ -1,7 +1,9 @@
 'use strict'
 
-import { GenericObject, ValidationDataInterface } from '../../Contracts/BaseContract'
-import { deepFind, deepSet, dotify } from '../utils/object'
+import { deepFind, deepSet, dotify } from '../utilities/object'
+
+import { GenericObject } from 'src/Contracts/IGeneric'
+import { ValidationDataInterface } from '../Contracts/BaseContract'
 
 const validationData: ValidationDataInterface = {
 

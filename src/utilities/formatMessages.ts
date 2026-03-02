@@ -1,8 +1,8 @@
 'use strict'
 
-import { CustomMessages, GenericObject } from '../../Contracts/BaseContract'
-
-import Lang from '../lang'
+import { CustomMessages } from '../Contracts/BaseContract'
+import { GenericObject } from 'src/Contracts/IGeneric'
+import Lang from '../Lang'
 import { dotify } from './object'
 import { isSizeRule } from './general'
 

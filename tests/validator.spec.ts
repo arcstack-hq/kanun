@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
 import { ValidationException } from '../src/ValidationException'
-import { ValidationRule, type IDatabaseDriver } from '../src'
+import { type IDatabaseDriver } from '../src'
 import { Validator } from '../src/Validator'
+import { ValidationRule } from 'src'
 
 describe('Validator', () => {
     describe('basic rules', () => {

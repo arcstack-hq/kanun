@@ -165,5 +165,5 @@ Kanun and all Arcstack packages are open source and licensed under the [MIT lice
 [d1]: https://img.shields.io/npm/dt/%40kanun?style=flat-square&label=Downloads&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2F%40kanun
 [linl]: https://github.com/arcstack-hq/kanun/blob/main/LICENSE
 [lini]: https://img.shields.io/github/license/arcstack-hq/kanun
-[tel]: https://github.com/arcstack-hq/kanun/actions/workflows/test.yml
-[tei]: https://github.com/arcstack-hq/kanun/actions/workflows/test.yml/badge.svg
+[tel]: https://github.com/arcstack-hq/kanun/actions/workflows/ci.yml
+[tei]: https://github.com/arcstack-hq/kanun/actions/workflows/ci.yml/badge.svg

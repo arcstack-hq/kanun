@@ -2,10 +2,14 @@
 
 import { isArrayOfRules, isRule } from './general'
 
-import { GenericObject } from '../../Contracts/BaseContract'
+import { GenericObject } from 'src/Contracts/IGeneric'
 
 /**
  * Get value at path of object. If the resolved value is undifined, the returned result will be undefined
+ * 
+ * @param obj 
+ * @param path 
+ * @returns 
  */
 export function deepFind (obj: GenericObject, path: string): any {
 
@@ -24,6 +28,10 @@ export function deepFind (obj: GenericObject, path: string): any {
 
 /**
  * Set value at path of object. 
+ * 
+ * @param target 
+ * @param path 
+ * @param value 
  */
 export function deepSet (target: any, path: string | string[], value: any): void {
     const paths: string[] = typeof path === 'string' ? path.split('.') : path
@@ -55,6 +63,11 @@ export function deepSet (target: any, path: string | string[], value: any): void
 
 /**
  * Flatten a multi-dimensional associative array with dots.
+ * 
+ * @param obj 
+ * @param ignoreRulesArray 
+ * @param withBaseObjectType 
+ * @returns 
  */
 export function dotify (
     obj: GenericObject,
@@ -90,6 +103,9 @@ export function dotify (
 
 /**
  * Check if the value is an object
+ * 
+ * @param value 
+ * @returns 
  */
 export function isObject (value: any) {
     return value && typeof value === 'object' && !Array.isArray(value)
@@ -97,6 +113,10 @@ export function isObject (value: any) {
 
 /**
  * Deeply merge nested objects
+ * 
+ * @param target 
+ * @param source 
+ * @returns 
  */
 export function mergeDeep (target: GenericObject, source: GenericObject): GenericObject {
     const output = Object.assign({}, target)
@@ -123,6 +143,10 @@ export function mergeDeep (target: GenericObject, source: GenericObject): Generi
 
 /**
  * Check if objects are deep equal
+ * 
+ * @param firstParam 
+ * @param secondParam 
+ * @returns 
  */
 export function deepEqual (firstParam: GenericObject, secondParam: GenericObject): boolean {
     const first = dotify(firstParam, false, true)

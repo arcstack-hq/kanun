@@ -1,8 +1,8 @@
+import IImplicitRule from './Rules/IImplicitRule'
 import { ValidationRuleCallable } from './Contracts/RuleBuilder'
 import type { Validator } from './Validator'
-import { ImplicitRule as Rule } from './validator/Core'
 
-export abstract class ImplicitRule extends Rule {
+export abstract class ImplicitRule extends IImplicitRule {
     rules: ValidationRuleCallable[] = []
 
     /**

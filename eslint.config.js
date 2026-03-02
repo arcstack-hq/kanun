@@ -5,6 +5,10 @@ import tseslint from 'typescript-eslint'
 
 export default defineConfig(
   {
+    env: {
+      browser: true,
+      node: true
+    },
     languageOptions: {
       parserOptions: {
         // eslint-disable-next-line no-undef

@@ -9,6 +9,7 @@
         "**/*.ts"
       ],
       "exclude": [
+        "**/*.d.ts",
         "**/*.test.ts",
         "**/index.ts"
       ]

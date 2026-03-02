@@ -1,9 +1,10 @@
 'use strict'
 
-import { GenericObject, ImplicitAttributes, InitialRule, Rule, Rules, ValidationRuleParserInterface } from '../../Contracts/BaseContract'
+import { ImplicitAttributes, InitialRule, Rules, TRule, ValidationRuleParserInterface } from '../Contracts/BaseContract'
 
-import ClosureValidationRule from '../rules/closureValidationRule'
-import RuleContract from '../rules/ruleContract'
+import ClosureValidationRule from '../Rules/closureValidationRule'
+import { GenericObject } from 'src/Contracts/IGeneric'
+import RuleContract from '../Rules/IRuleContract'
 import validationData from './validationData'
 
 const validationRuleParser: ValidationRuleParserInterface = {
@@ -27,7 +28,7 @@ const validationRuleParser: ValidationRuleParserInterface = {
                 delete rules[key]
             }
             else if (Object.prototype.hasOwnProperty.call(rules, key) && Array.isArray(rules)) {
-                rules[Number(key)] = this.explodeExplicitRules(rules[Number(key)] as Rule[])
+                rules[Number(key)] = this.explodeExplicitRules(rules[Number(key)] as TRule[])
             }
             else if (Object.prototype.hasOwnProperty.call(rules, key) && !Array.isArray(rules)) {
                 rules[key] = this.explodeExplicitRules(rules[key])
@@ -94,7 +95,7 @@ const validationRuleParser: ValidationRuleParserInterface = {
     /**
      * In case the rules specified by the user are a string seperated with '|' - convert them to an array
      */
-    explodeExplicitRules: function (rules: InitialRule | InitialRule[]): Rule[] {
+    explodeExplicitRules: function (rules: InitialRule | InitialRule[]): TRule[] {
         if (typeof rules === 'string') {
             return rules.split('|')
         }
@@ -109,7 +110,7 @@ const validationRuleParser: ValidationRuleParserInterface = {
     /**
      * Prepare the given rule for the Validator.
      */
-    prepareRule (rule: InitialRule): Rule {
+    prepareRule (rule: InitialRule): TRule {
 
         if (rule instanceof RuleContract) {
             return rule
@@ -125,7 +126,7 @@ const validationRuleParser: ValidationRuleParserInterface = {
     /**
      * Extract the rule name and parameters from a rule.
      */
-    parse (rule: Rule): [Rule, string[]] {
+    parse (rule: TRule): [TRule, string[]] {
         if (rule instanceof RuleContract) {
             return [rule, []]
         }

@@ -1,45 +1,45 @@
 'use strict'
 
-import { LangInterface } from '../Contracts/BaseContract'
+import { GenericObject } from './Contracts/IGeneric'
 import locales from './locales/index'
-import { mergeDeep } from './utils/object'
+import { mergeDeep } from './utilities/object'
 
-const lang: LangInterface = {
+export class Lang {
 
     /**
      * Default lang to be used, when lang is not specified 
      */
-    defaultLang: 'en',
+    static defaultLang: string = 'en'
 
     /**
      * Determines the locale to be used when tu current one is not available
      */
-    fallbackLang: 'en',
+    static fallbackLang: string = 'en'
 
     /**
      * The existing langs that are supported by the library
      */
-    existingLangs: ['en'],
+    static existingLangs: string[] = ['en']
 
     /**
      * Store the translations passed by the user
      */
-    translations: {},
+    static translations: GenericObject = {}
 
     /**
      * Stores the messages that are already loaded
      */
-    messages: {},
+    static messages: GenericObject = {}
 
     /**
      * Stores the default messages
      */
-    defaultMessages: {},
+    static defaultMessages: GenericObject = {}
 
     /**
      * Stores the fallback messages
      */
-    fallbackMessages: locales.en,
+    static fallbackMessages: GenericObject = locales.en
 
     /**
      * Get messages for lang 
@@ -47,32 +47,39 @@ const lang: LangInterface = {
      * @param lang 
      * @returns 
      */
-    // @ts-expect-error just ignore the error here, it is a valid check
-    get (lang: string = this.defaultLang): object {
+    static get (lang?: string): GenericObject {
+        lang ??= this.defaultLang
         this.load(lang)
         return this.messages[lang]
-    },
+    }
 
     /**
      * Set the translation object passed by the user
+     * 
+     * @param translations 
      */
-    setTranslationObject (translations: object): void {
+    static setTranslationObject (translations: GenericObject): void {
         this.translations = translations
+        this.existingLangs = Array.from(new Set([...this.existingLangs, ...Object.keys(translations)]))
         this.setDefaultLang(this.defaultLang)
-    },
+    }
 
     /**
      * Set the default lang that should be used. And assign the default messages
+     * 
+     * @param lang 
      */
-    setDefaultLang (lang: string): void {
+    static setDefaultLang (lang: string): void {
         this.defaultLang = lang
         this.load(lang)
-    },
+    }
 
     /**
      * Set the fallback lang to be used. And assign the fallback messages
+     * 
+     * @param lang 
      */
-    setFallbackLang (lang: string): void {
+    static setFallbackLang (lang: string): void {
         this.fallbackLang = lang
         this.fallbackMessages = locales.en
 
@@ -85,19 +92,24 @@ const lang: LangInterface = {
         if (Object.prototype.hasOwnProperty.call(this.translations, lang)) {
             this.fallbackMessages = mergeDeep(this.fallbackMessages, this.translations[lang])
         }
-    },
+    }
 
     /**
      * Get the default language
+     * 
+     * @returns 
      */
-    getDefaultLang (): string {
+    static getDefaultLang (): string {
         return this.defaultLang
-    },
+    }
 
     /**
      * Load the messages based on the specified language
+     * 
+     * @param lang 
+     * @returns 
      */
-    load (lang: string): void {
+    static load (lang: string): void {
 
         if (this.messages[lang]) {
             return
@@ -117,4 +129,4 @@ const lang: LangInterface = {
     }
 }
 
-export default lang
+export default Lang

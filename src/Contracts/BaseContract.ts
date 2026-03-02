@@ -1,27 +1,20 @@
 'use strict'
 
-import BaseRule from '../validator/rules/baseRule'
-import RuleContract from '../validator/rules/ruleContract'
-import replaceAttributePayload from '../validator/payloads/replaceAttributePayload'
-
-export interface GenericObject {
-    [key: string]: any
-};
-
-export interface GenericCallable {
-    (...args: any[]): any
-};
+import BaseRule from '../Rules/baseRule'
+import { GenericObject } from './IGeneric';
+import RuleContract from '../Rules/IRuleContract'
+import replaceAttributePayload from '../payloads/replaceAttributePayload'
 
 export type InitialRule = string | ValidationCallback | RuleContract | BaseRule;
 
-export type Rule = string | RuleContract;
+export type TRule = string | RuleContract;
 
 export interface InitialRules extends GenericObject {
     [key: string]: InitialRule | InitialRule[]
 };
 
 export interface Rules extends GenericObject {
-    [key: string]: Rule[]
+    [key: string]: TRule[]
 };
 
 export interface ImplicitAttributes {
@@ -86,7 +79,7 @@ export interface ValidationRuleParserInterface {
      */
     explodeExplicitRules: (
         rule: string | InitialRule[]
-    ) => Rule[];
+    ) => TRule[];
 
     /**
      * Prepare the given rule for validation.
@@ -94,7 +87,7 @@ export interface ValidationRuleParserInterface {
      * @param rule 
      * @returns 
      */
-    prepareRule: (rule: InitialRule) => Rule;
+    prepareRule: (rule: InitialRule) => TRule;
 
     /**
      * Merge the given rules with any existing rules for the attribute.
@@ -116,7 +109,7 @@ export interface ValidationRuleParserInterface {
      * @param rule 
      * @returns 
      */
-    parse: (rule: Rule) => [Rule, string[]];
+    parse: (rule: TRule) => [TRule, string[]];
 
     /**
      * Parse a string rule into its name and parameters.
@@ -192,23 +185,6 @@ export interface ReplaceAttributeInterface {
     replaceRequiredUnless: (payload: replaceAttributePayload) => string;
     replaceSame: (payload: replaceAttributePayload) => string;
     replaceSize: (payload: replaceAttributePayload) => string;
-};
-
-
-export interface LangInterface {
-    defaultLang: string;
-    fallbackLang: string;
-    existingLangs: string[];
-    translations: GenericObject;
-    messages: GenericObject;
-    defaultMessages: GenericObject;
-    fallbackMessages: GenericObject;
-    get: (lang: string) => GenericObject;
-    setTranslationObject: (translations: GenericObject) => void;
-    setDefaultLang: (lang: string) => void;
-    setFallbackLang: (lang: string) => void;
-    getDefaultLang: () => string;
-    load: (lang: string) => void;
 };
 
 export type ValidationCallback = (

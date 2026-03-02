@@ -1,13 +1,13 @@
 import { IValidationRule } from './Contracts/IValidationRule'
+import RuleContract from './Rules/IRuleContract'
 import { RulesForData } from './Contracts/ValidatorContracts'
 import { ValidationRuleCallable } from './Contracts/RuleBuilder'
 import type { Validator } from './Validator'
-import { Rule } from './validator/Core'
 
 export abstract class ValidationRule<
     D extends Record<string, any> = any,
     R extends RulesForData<D> = any
-> extends Rule implements IValidationRule {
+> extends RuleContract implements IValidationRule {
     rules: ValidationRuleCallable[] = []
     private passing: boolean = false
 

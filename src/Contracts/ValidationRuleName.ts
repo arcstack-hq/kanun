@@ -1,8 +1,8 @@
-import type In from '../validator/rules/in'
-import type NotIn from '../validator/rules/notIn'
-import type Regex from '../validator/rules/regex'
-import type RequiredIf from '../validator/rules/requiredIf'
-import type { Rule } from '../validator/Core'
+import type In from '../Rules/in'
+import type NotIn from '../Rules/notIn'
+import type Regex from '../Rules/regex'
+import type RequiredIf from '../Rules/requiredIf'
+import RuleContract from 'src/Rules/IRuleContract'
 
 export type ParamableValidationRuleName =
     | 'accepted_if'
@@ -73,9 +73,9 @@ export type ValidationRuleName = ParamableValidationRuleName | PlainRuleName
 type MethodRules = Regex | In | NotIn | RequiredIf
 
 /**
- * Single rule value (supports autocomplete + arbitrary strings + Rule instances)
+ * Single rule value (supports autocomplete + arbitrary strings + RuleContract instances)
  */
-type RuleName = ValidationRuleName | `${ParamableValidationRuleName}:${string}` | Rule | MethodRules
+type RuleName = ValidationRuleName | `${ParamableValidationRuleName}:${string}` | RuleContract | MethodRules
 
 export type ValidationRuleSet =
     | RuleName
