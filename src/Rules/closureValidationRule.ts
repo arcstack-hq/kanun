@@ -1,6 +1,6 @@
 'use strict'
 
-import { GenericCallable, ValidationCallback } from '../../Contracts/BaseContract'
+import { GenericCallable, ValidationCallback } from 'src'
 
 import RuleContract from './IRuleContract'
 
