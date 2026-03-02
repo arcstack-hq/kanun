@@ -162,9 +162,9 @@ If you discover a security vulnerability within Kanun, please send an e-mail to 
 
 Kanun and all Arcstack packages are open source and licensed under the [MIT license](LICENSE).
 
-[i1]: https://img.shields.io/npm/v/%40kanun?style=flat-square&label=kanun&color=%230970ce
+[i1]: https://img.shields.io/npm/v/kanun?style=flat-square&label=kanun&color=%230970ce
 [l1]: https://www.npmjs.com/package/kanun
-[d1]: https://img.shields.io/npm/dt/%40kanun?style=flat-square&label=Downloads&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2F%40kanun
+[d1]: https://img.shields.io/npm/dt/kanun?style=flat-square&label=Downloads&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fkanun
 [linl]: https://github.com/arcstack-hq/kanun/blob/main/LICENSE
 [lini]: https://img.shields.io/github/license/arcstack-hq/kanun
 [tel]: https://github.com/arcstack-hq/kanun/actions/workflows/ci.yml
