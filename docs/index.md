@@ -6,7 +6,7 @@ hero:
   name: 'Kanun'
   tagline: Lightweight framework-agnostic and TypeScript-first validation library
   image:
-    src: /banner.png
+    src: /banner.jpg
     alt: Kanun Banner
   actions:
     - theme: brand

@@ -7,19 +7,19 @@ export default defineConfig({
   title: "Kanun",
   description: "Lightweight framework-agnostic and TypeScript-first validation library",
   head: [
-    ['link', { rel: 'icon', href: '/banner.png' }],
+    ['link', { rel: 'icon', href: '/banner.jpg' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
     ['meta', { name: 'description', content: 'Lightweight framework-agnostic and TypeScript-first validation library' }],
     ['meta', { name: 'keywords', content: 'Validation, TypeScript, Framework-agnostic, Lightweight' }],
     ['meta', { name: 'author', content: 'Toneflix' }],
     ['meta', { property: 'og:title', content: 'Kanun' }],
     ['meta', { property: 'og:description', content: 'Lightweight framework-agnostic and TypeScript-first validation library' }],
-    ['meta', { property: 'og:image', content: '/banner.png' }],
+    ['meta', { property: 'og:image', content: '/banner.jpg' }],
     ['meta', { property: 'og:url', content: 'https://arcstack-hq.github.io/kanun/' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:title', content: 'Kanun' }],
     ['meta', { name: 'twitter:description', content: 'Lightweight framework-agnostic and TypeScript-first validation library' }],
-    ['meta', { name: 'twitter:image', content: '/banner.png' }]
+    ['meta', { name: 'twitter:image', content: '/banner.jpg' }]
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
