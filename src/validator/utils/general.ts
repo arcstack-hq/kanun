@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
-import BaseRule from '../rules/baseRule';
-import ImplicitRuleContract from '../rules/implicitRuleContract';
-import { Rule } from '../../Contracts/BaseContract';
-import RuleContract from '../rules/ruleContract';
+import BaseRule from '../rules/baseRule'
+import ImplicitRuleContract from '../rules/implicitRuleContract'
+import { Rule } from '../../Contracts/BaseContract'
+import RuleContract from '../rules/ruleContract'
 
 const implicitRues: string[] = [
     'accepted', 'accepted_if', 'declined', 'declined_if',
     'filled', 'present', 'required', 'required_if', 'required_unless',
     'required_with', 'required_with_all', 'required_without', 'required_without_all'
-];
+]
 
 /**
  * Get the size of a value based on its type
@@ -17,14 +17,14 @@ const implicitRues: string[] = [
 export function getSize (value: any, hasNumericRule: boolean = false): number {
 
     if (typeof value === 'number' || (isNaN(value) === false && hasNumericRule === true)) {
-        return Number(value);
+        return Number(value)
     } else if (typeof value === 'string' || Array.isArray(value)) {
-        return value.length;
+        return value.length
     } else if (typeof value === 'object' && value !== null) {
-        return Object.keys(value).length;
+        return Object.keys(value).length
     }
 
-    return -1;
+    return -1
 };
 
 /**
@@ -32,9 +32,9 @@ export function getSize (value: any, hasNumericRule: boolean = false): number {
  */
 export function sameType (value: any, otherValue: any): boolean {
 
-    const valueType = Array.isArray(value) ? 'array' : (value === null ? null : typeof value);
-    const otherValueType = Array.isArray(otherValue) ? 'array' : (otherValue === null ? null : typeof otherValue);
-    return valueType === otherValueType;
+    const valueType = Array.isArray(value) ? 'array' : (value === null ? null : typeof value)
+    const otherValueType = Array.isArray(otherValue) ? 'array' : (otherValue === null ? null : typeof otherValue)
+    return valueType === otherValueType
 
 };
 
@@ -43,7 +43,7 @@ export function sameType (value: any, otherValue: any): boolean {
  * Check if Value is an Ineteger
  */
 export function isInteger (value: any): boolean {
-    return value !== null && isNaN(value) === false && value % 1 === 0;
+    return value !== null && isNaN(value) === false && value % 1 === 0
 };
 
 /**
@@ -53,7 +53,7 @@ export function isRule (value: any): boolean {
     return typeof value === 'string' ||
         typeof value === 'function' ||
         value instanceof RuleContract ||
-        value instanceof BaseRule;
+        value instanceof BaseRule
 
 };
 
@@ -63,11 +63,11 @@ export function isRule (value: any): boolean {
 export function isArrayOfRules (values: any[]): boolean {
     for (let i = 0; i < values.length; i++) {
         if (isRule(values[i])) {
-            return true;
+            return true
         }
     }
 
-    return false;
+    return false
 }
 
 /**
@@ -77,9 +77,9 @@ export function isSizeRule (rule: string): boolean {
 
     const sizeRules: string[] = [
         'size', 'between', 'min', 'max', 'gt', 'lt', 'gte', 'lte'
-    ];
+    ]
 
-    return sizeRules.indexOf(rule) !== -1;
+    return sizeRules.indexOf(rule) !== -1
 };
 
 
@@ -89,21 +89,21 @@ export function isSizeRule (rule: string): boolean {
 export function isImplicitRule (rule: Rule): boolean {
 
     if (rule instanceof ImplicitRuleContract) {
-        return true;
+        return true
     }
 
     if (typeof rule === 'string') {
-        return implicitRues.indexOf(rule) !== -1;
+        return implicitRues.indexOf(rule) !== -1
     }
 
-    return false;
+    return false
 };
 
 /**
  * Add a new implicit rule
  */
 export function addImplicitRule (rule: string): void {
-    implicitRues.push(rule);
+    implicitRues.push(rule)
 }
 
 
@@ -111,7 +111,7 @@ export function addImplicitRule (rule: string): void {
  * Returns the numeric rules
  */
 export function getNumericRules (): string[] {
-    return ['numeric', 'integer'];
+    return ['numeric', 'integer']
 };
 
 /**
@@ -119,9 +119,9 @@ export function getNumericRules (): string[] {
  */
 export function isNumericRule (rule: string): boolean {
 
-    const numericRules: string[] = getNumericRules();
+    const numericRules: string[] = getNumericRules()
 
-    return numericRules.indexOf(rule) !== -1;
+    return numericRules.indexOf(rule) !== -1
 };
 
 /**
@@ -130,20 +130,20 @@ export function isNumericRule (rule: string): boolean {
 export function compare (first: any, second: any, operator: string, strict: boolean = false): boolean {
     switch (operator) {
         case '<':
-            return first < second;
+            return first < second
         case '>':
-            return first > second;
+            return first > second
         case '<=':
-            return first <= second;
+            return first <= second
         case '>=':
-            return first >= second;
+            return first >= second
         case '=':
             if (strict === true) {
-                return first === second;
+                return first === second
             }
-            return first == second;
+            return first == second
         default:
-            throw 'Invalid operator parameter';
+            throw 'Invalid operator parameter'
     }
 }
 
@@ -153,13 +153,13 @@ export function compare (first: any, second: any, operator: string, strict: bool
 export function convertValuesToBoolean (values: string[]): (string | boolean)[] {
     return values.map(value => {
         if (value === 'true') {
-            return true;
+            return true
         } else if (value === 'false') {
-            return false;
+            return false
         }
 
-        return value;
-    });
+        return value
+    })
 }
 
 /**
@@ -168,11 +168,11 @@ export function convertValuesToBoolean (values: string[]): (string | boolean)[] 
 export function convertValuesToNumber (values: string[]): (string | number)[] {
     return values.map(value => {
         if (!isNaN(Number(value))) {
-            return Number(value);
+            return Number(value)
         }
 
-        return value;
-    });
+        return value
+    })
 }
 
 /**
@@ -181,8 +181,8 @@ export function convertValuesToNumber (values: string[]): (string | number)[] {
 export function convertValuesToNull (values: string[]): (string | null)[] {
     return values.map(value => {
         if (value.toLowerCase() === 'null') {
-            return null;
+            return null
         }
-        return value;
-    });
+        return value
+    })
 }

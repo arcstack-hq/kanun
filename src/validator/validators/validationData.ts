@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-import { GenericObject, ValidationDataInterface } from '../../Contracts/BaseContract';
-import { deepFind, deepSet, dotify } from '../utils/object';
+import { GenericObject, ValidationDataInterface } from '../../Contracts/BaseContract'
+import { deepFind, deepSet, dotify } from '../utils/object'
 
 const validationData: ValidationDataInterface = {
 
@@ -13,9 +13,9 @@ const validationData: ValidationDataInterface = {
      * @returns 
      */
     initializeAndGatherData: function (attribute: string, masterData: object) {
-        let data: object = dotify(this.initializeAttributeOnData(attribute, masterData));
+        const data: object = dotify(this.initializeAttributeOnData(attribute, masterData))
 
-        return { ...data, ...this.extractValuesFromWildCards(masterData, data, attribute) };
+        return { ...data, ...this.extractValuesFromWildCards(masterData, data, attribute) }
     },
 
     /**
@@ -26,16 +26,16 @@ const validationData: ValidationDataInterface = {
      * @returns 
      */
     initializeAttributeOnData: function (attribute: string, masterData: object): object {
-        const explicitPath: string = this.getLeadingExplicitAttributePath(attribute);
+        const explicitPath: string = this.getLeadingExplicitAttributePath(attribute)
 
-        let data: object = this.extractDataFromPath(explicitPath, JSON.parse(JSON.stringify(masterData)));
+        const data: object = this.extractDataFromPath(explicitPath, JSON.parse(JSON.stringify(masterData)))
 
         if (attribute.indexOf('*') === -1 || attribute.indexOf('*') === attribute.length - 1) {
-            return data;
+            return data
         }
 
-        deepSet(data, attribute, null);
-        return data;
+        deepSet(data, attribute, null)
+        return data
     },
 
 
@@ -53,21 +53,21 @@ const validationData: ValidationDataInterface = {
         attribute: string
     ): GenericObject {
 
-        let keys: string[] = [];
-        const pattern: RegExp = new RegExp('^' + attribute.replace(/\*/g, '[^\.]*'));
-        let result: RegExpMatchArray | null = null;
+        const keys: string[] = []
+        const pattern: RegExp = new RegExp('^' + attribute.replace(/\*/g, '[^\\.]*'))
+        let result: RegExpMatchArray | null = null
 
-        for (let key in data) {
-            result = key.match(pattern);
+        for (const key in data) {
+            result = key.match(pattern)
             if (result) {
-                keys.push(result[0]);
+                keys.push(result[0])
             }
         }
 
-        data = {};
-        keys.forEach(key => data[key] = deepFind(masterData, key));
-
-        return data;
+        data = {}
+        keys.forEach(key => data[key] = deepFind(masterData, key))
+        void result
+        return data
     },
 
     /**
@@ -77,7 +77,7 @@ const validationData: ValidationDataInterface = {
      * @returns 
      */
     getLeadingExplicitAttributePath: function (attribute: string): string {
-        return attribute.split('*')[0].replace(/\.$/, '');
+        return attribute.split('*')[0].replace(/\.$/, '')
     },
 
     /**
@@ -89,15 +89,15 @@ const validationData: ValidationDataInterface = {
      */
     extractDataFromPath (path: string, masterData: GenericObject): GenericObject {
 
-        let results: GenericObject = {};
-        let value: any = deepFind(masterData, path);
+        const results: GenericObject = {}
+        const value: any = deepFind(masterData, path)
 
         if (value !== undefined) {
-            deepSet(results, path, value);
+            deepSet(results, path, value)
         }
 
-        return results;
+        return results
     }
-};
+}
 
-export default validationData;
+export default validationData

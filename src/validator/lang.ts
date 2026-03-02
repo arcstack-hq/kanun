@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-import { LangInterface } from '../Contracts/BaseContract';
-import locales from './locales/index';
-import { mergeDeep } from './utils/object';
+import { LangInterface } from '../Contracts/BaseContract'
+import locales from './locales/index'
+import { mergeDeep } from './utils/object'
 
 const lang: LangInterface = {
 
@@ -47,43 +47,43 @@ const lang: LangInterface = {
      * @param lang 
      * @returns 
      */
-    // @ts-ignore
+    // @ts-expect-error just ignore the error here, it is a valid check
     get (lang: string = this.defaultLang): object {
-        this.load(lang);
-        return this.messages[lang];
+        this.load(lang)
+        return this.messages[lang]
     },
 
     /**
      * Set the translation object passed by the user
      */
     setTranslationObject (translations: object): void {
-        this.translations = translations;
-        this.setDefaultLang(this.defaultLang);
+        this.translations = translations
+        this.setDefaultLang(this.defaultLang)
     },
 
     /**
      * Set the default lang that should be used. And assign the default messages
      */
     setDefaultLang (lang: string): void {
-        this.defaultLang = lang;
-        this.load(lang);
+        this.defaultLang = lang
+        this.load(lang)
     },
 
     /**
      * Set the fallback lang to be used. And assign the fallback messages
      */
     setFallbackLang (lang: string): void {
-        this.fallbackLang = lang;
-        this.fallbackMessages = locales.en;
+        this.fallbackLang = lang
+        this.fallbackMessages = locales.en
 
         // check if the lang translations exist in the library and load them
-        if (locales.hasOwnProperty(lang)) {
-            this.fallbackMessages = mergeDeep(this.fallbackMessages, locales[lang as never]);
+        if (Object.prototype.hasOwnProperty.call(locales, lang)) {
+            this.fallbackMessages = mergeDeep(this.fallbackMessages, locales[lang as never])
         }
 
         // check if the lang translations exit in the object passed by the user
-        if (this.translations.hasOwnProperty(lang)) {
-            this.fallbackMessages = mergeDeep(this.fallbackMessages, this.translations[lang]);
+        if (Object.prototype.hasOwnProperty.call(this.translations, lang)) {
+            this.fallbackMessages = mergeDeep(this.fallbackMessages, this.translations[lang])
         }
     },
 
@@ -91,7 +91,7 @@ const lang: LangInterface = {
      * Get the default language
      */
     getDefaultLang (): string {
-        return this.defaultLang;
+        return this.defaultLang
     },
 
     /**
@@ -100,21 +100,21 @@ const lang: LangInterface = {
     load (lang: string): void {
 
         if (this.messages[lang]) {
-            return;
+            return
         }
 
         // check if the lang translations exist in the library and load them
-        if (locales.hasOwnProperty(lang)) {
-            this.messages[lang] = mergeDeep(this.fallbackMessages, locales[lang as never]);
+        if (Object.prototype.hasOwnProperty.call(locales, lang)) {
+            this.messages[lang] = mergeDeep(this.fallbackMessages, locales[lang as never])
         } else {
-            this.messages[lang] = mergeDeep({}, this.fallbackMessages);
+            this.messages[lang] = mergeDeep({}, this.fallbackMessages)
         }
 
         // check if the lang translations exist in the object passed by the user
-        if (this.translations.hasOwnProperty(lang)) {
-            this.messages[lang] = mergeDeep(this.messages[lang], this.translations[lang]);
+        if (Object.prototype.hasOwnProperty.call(this.translations, lang)) {
+            this.messages[lang] = mergeDeep(this.messages[lang], this.translations[lang])
         }
     }
-};
+}
 
-export default lang;
+export default lang

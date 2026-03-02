@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
 export function buildValidationMethodName (rule: string): string {
     if (!rule) {
-        return rule;
+        return rule
     }
 
-    return rule.split('_').map(rule => `${rule[0].toUpperCase()}${rule.slice(1)}`).join('');
+    return rule.split('_').map(rule => `${rule[0].toUpperCase()}${rule.slice(1)}`).join('')
 };

@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-import { CustomMessages, GenericObject } from '../../Contracts/BaseContract';
+import { CustomMessages, GenericObject } from '../../Contracts/BaseContract'
 
-import Lang from '../lang';
-import { dotify } from './object';
-import { isSizeRule } from './general';
+import Lang from '../lang'
+import { dotify } from './object'
+import { isSizeRule } from './general'
 
 /**
  * Get the message type based on the value. The message type is used essentially for size rules
@@ -12,14 +12,14 @@ import { isSizeRule } from './general';
 function getMesageType (value: any, hasNumericRule: boolean = false): string {
 
     if (typeof value === 'number' || typeof value === 'undefined' || (isNaN(value) === false && hasNumericRule === true)) {
-        return 'number';
+        return 'number'
     }
 
     if (Array.isArray(value)) {
-        return 'array';
+        return 'array'
     }
 
-    return typeof value;
+    return typeof value
 };
 
 /**
@@ -29,54 +29,57 @@ function getCustomMessage (attributes: string[], rule: string, customMessages: C
 
     // The primary attribute is only used for wildcard rules, for example if the attribute is 'user.1.email'
     // the primary attribute value will be 'user.*.email'
-    let [attribute, primaryAttribute] = attributes;
+    const [attribute, primaryAttribute] = attributes
 
     // get the translated messages form the custom attribute in the language file
-    const translatedMessages = dotify(Lang.get(lang)['custom'] || {});
+    const translatedMessages = dotify(Lang.get(lang)['custom'] || {})
 
     // The key combination will look something like this [user.*.email.required, *.email.required, email.required, required]
     // This way we will be able to search all the possible combinations
-    const keys: string[] = getKeyCombinations(`${attribute}.${rule}`);
-    let allKeys: string[] = keys;
+    const keys: string[] = getKeyCombinations(`${attribute}.${rule}`)
+    let allKeys: string[] = keys
 
     // If the primary attribute exists we should merge all the combinations together
     if (primaryAttribute) {
-        allKeys = [];
-        const primaryAttributeKeys = getKeyCombinations(`${primaryAttribute}.${rule}`);
+        allKeys = []
+        const primaryAttributeKeys = getKeyCombinations(`${primaryAttribute}.${rule}`)
         for (let i = 0; i < keys.length; i++) {
-            allKeys.push(keys[i]);
+            allKeys.push(keys[i])
             if (keys[i] !== primaryAttributeKeys[i]) {
-                allKeys.push(primaryAttributeKeys[i]);
+                allKeys.push(primaryAttributeKeys[i])
             }
         }
     }
 
     if (isSizeRule(rule)) {
-        allKeys.pop();
-        allKeys.push(`${rule}.${messageType}`);
-        allKeys.push(rule);
+        allKeys.pop()
+        allKeys.push(`${rule}.${messageType}`)
+        allKeys.push(rule)
     }
 
-    let key: string = '';
-    let message: string | undefined = '';
+    let key: string = ''
+    let message: string | undefined = ''
     for (let i = 0; i < allKeys.length; i++) {
-        key = allKeys[i];
+        key = allKeys[i]
         // The developer may dynamically specify the object of custom messages on the validator instance
         // If the key exists in the object it is used over the other ways of pulling the 
         // message for this given key
-        if (customMessages.hasOwnProperty(key)) {
-            return customMessages[key];
+        if (Object.prototype.hasOwnProperty.call(customMessages, key)) {
+            return customMessages[key]
         }
 
         // try to get the custom error message from the translation file
-        message = translatedMessages[key];
+        message = translatedMessages[key]
 
         if (typeof message === 'string') {
-            return message;
+            return message
         }
     }
 
-    return null;
+    void key
+    void message
+
+    return null
 };
 
 /**
@@ -92,22 +95,22 @@ export function getMessage (
 ): string {
 
     // check if error exists inside the custom message object provided by the user
-    const inlineMessage: string | null = getCustomMessage(attributes, rule, customMessages, getMesageType(value, hasNumericRule), lang);
+    const inlineMessage: string | null = getCustomMessage(attributes, rule, customMessages, getMesageType(value, hasNumericRule), lang)
 
     if (inlineMessage) {
-        return inlineMessage;
+        return inlineMessage
     }
 
-    const validationMessages: GenericObject = Lang.get(lang);
+    const validationMessages: GenericObject = Lang.get(lang)
 
     // check if rule has sizes such as min, max, between ...
     // and get message from local object
     if (isSizeRule(rule) === true) {
-        return validationMessages[rule][getMesageType(value, hasNumericRule)];
+        return validationMessages[rule][getMesageType(value, hasNumericRule)]
     }
 
     // get message from local object
-    return validationMessages[rule] || '';
+    return validationMessages[rule] || ''
 
 };
 
@@ -118,14 +121,14 @@ export function toSnakeCase (string: string): string {
     return string
         .split(/ |\B(?=[A-Z])/)
         .map(word => word.toLowerCase())
-        .join('_');
+        .join('_')
 };
 
 /**
  * Get the formatted name of the attribute
  */
 export function getFormattedAttribute (attribute: string): string {
-    return toSnakeCase(getPrimaryKeyFromPath(attribute)).replace(/_/g, ' ').trim();
+    return toSnakeCase(getPrimaryKeyFromPath(attribute)).replace(/_/g, ' ').trim()
 };
 
 /**
@@ -134,15 +137,15 @@ export function getFormattedAttribute (attribute: string): string {
  */
 export function getKeyCombinations (key: string): string[] {
 
-    const combinations: string[] = [key];
-    const splittedKey: string[] = key.split('.');
+    const combinations: string[] = [key]
+    const splittedKey: string[] = key.split('.')
 
     while (splittedKey.length > 1) {
-        splittedKey.shift();
-        combinations.push(splittedKey.join('.'));
+        splittedKey.shift()
+        combinations.push(splittedKey.join('.'))
     }
 
-    return combinations;
+    return combinations
 }
 
 /**
@@ -150,20 +153,20 @@ export function getKeyCombinations (key: string): string[] {
  * For example the primary key for path 'user.info.email' will be 'email'
  */
 function getPrimaryKeyFromPath (path: string): string {
-    const splittedPath = path.split('.');
+    const splittedPath = path.split('.')
 
     // if the '.' does not exist in the path, then return the path itself
     if (splittedPath.length <= 1) {
-        return path;
+        return path
     }
 
-    let key = splittedPath.pop()!;
+    const key = splittedPath.pop()!
     // if the new key is a number, check the next attribute
     if (isNaN(parseInt(key)) === false) {
-        return getPrimaryKeyFromPath(splittedPath.join('.'));
+        return getPrimaryKeyFromPath(splittedPath.join('.'))
     }
 
-    return key;
+    return key
 };
 
 

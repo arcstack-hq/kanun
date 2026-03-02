@@ -4,8 +4,8 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   cleanUrls: true,
   base: '/kanun/',
-  title: "Kanun",
-  description: "Lightweight framework-agnostic and TypeScript-first validation library",
+  title: 'Kanun',
+  description: 'Lightweight framework-agnostic and TypeScript-first validation library',
   head: [
     ['link', { rel: 'icon', href: '/banner.jpg' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],

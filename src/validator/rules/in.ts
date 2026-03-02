@@ -1,23 +1,23 @@
-import BaseRule from './baseRule';
+import BaseRule from './baseRule'
 
 class In extends BaseRule {
 
     /**
      * The name of the rule.
      */
-    rule: string = 'in';
+    rule: string = 'in'
 
     /**
      * The accepted values.
      */
-    values: (string|number)[] = [];
+    values: (string|number)[] = []
 
     /**
      * Create a new In rule instance.
      */
     constructor(values: (string|number)[]) {
-        super();
-        this.values = values;
+        super()
+        this.values = values
     }
 
     /**
@@ -29,4 +29,4 @@ class In extends BaseRule {
 
 }
 
-export default In;
+export default In

@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-import BaseRule from '../validator/rules/baseRule';
-import RuleContract from '../validator/rules/ruleContract';
-import replaceAttributePayload from '../validator/payloads/replaceAttributePayload';
+import BaseRule from '../validator/rules/baseRule'
+import RuleContract from '../validator/rules/ruleContract'
+import replaceAttributePayload from '../validator/payloads/replaceAttributePayload'
 
 export interface GenericObject {
     [key: string]: any
@@ -28,9 +28,9 @@ export interface ImplicitAttributes {
     [key: string]: string[]
 }
 
-export interface CustomMessages extends GenericObject { };
+export type CustomMessages = GenericObject & {};
 
-export interface CustomAttributes extends GenericObject { };
+export type CustomAttributes = GenericObject & {};
 
 export interface ErrorMessage {
     error_type?: string,
@@ -58,7 +58,7 @@ export interface ValidationRuleParserInterface {
      * @returns 
      */
     explodeRules: (
-        rules: Rules | InitialRule,
+        rules: Rules | InitialRule[],
         data?: GenericObject
     ) => { rules: Rules, implicitAttributes: ImplicitAttributes };
 

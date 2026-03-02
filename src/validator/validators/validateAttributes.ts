@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-import { GenericObject, Rules } from '../../Contracts/BaseContract';
-import { compare, convertValuesToBoolean, convertValuesToNull, convertValuesToNumber, getNumericRules, getSize, isInteger, sameType } from '../utils/general';
-import { deepEqual, deepFind, isObject } from '../utils/object';
+import { GenericObject, Rules } from '../../Contracts/BaseContract'
+import { compare, convertValuesToBoolean, convertValuesToNull, convertValuesToNumber, getNumericRules, getSize, isInteger, sameType } from '../utils/general'
+import { deepEqual, deepFind, isObject } from '../utils/object'
 
-import { toDate } from '../utils/date';
-import validationRuleParser from './validationRuleParser';
+import { toDate } from '../utils/date'
+import validationRuleParser from './validationRuleParser'
 
 class validateAttributes {
     [key: string]: any;
@@ -13,16 +13,16 @@ class validateAttributes {
     /**
      * Stores the data object
      */
-    data: GenericObject;
+    data: GenericObject
 
     /**
      * Stores the rules object
      */
-    rules: Rules;
+    rules: Rules
 
     constructor(data: object = {}, rules: Rules = {}) {
-        this.data = data;
-        this.rules = rules;
+        this.data = data
+        this.rules = rules
     };
 
     /**
@@ -31,8 +31,8 @@ class validateAttributes {
      * This validation rule implies the attribute is "required".
      */
     validateAccepted (value: any): boolean {
-        const acceptable = ['yes', 'on', '1', 1, true, 'true'];
-        return this.validateRequired(value) && acceptable.indexOf(value) !== -1;
+        const acceptable = ['yes', 'on', '1', 1, true, 'true']
+        return this.validateRequired(value) && acceptable.indexOf(value) !== -1
     }
 
 
@@ -40,21 +40,21 @@ class validateAttributes {
      * Validate that an attribute was "accepted" when another attribute has a given value.
      */
     validateAcceptedIf (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(2, parameters, 'accepted_if');
+        this.requireParameterCount(2, parameters, 'accepted_if')
 
-        const other = deepFind(this.data, parameters[0]);
+        const other = deepFind(this.data, parameters[0])
 
         if (!other) {
-            return true;
+            return true
         }
 
-        const values = parameters.slice(1);
+        const values = parameters.slice(1)
 
         if (values.indexOf(other) !== -1) {
-            return this.validateAccepted(value);
+            return this.validateAccepted(value)
         }
 
-        return true;
+        return true
     }
 
 
@@ -62,16 +62,16 @@ class validateAttributes {
      *  Validate the date is after a given date.
      */
     validateAfter (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(1, parameters, 'after');
-        return this.compareDates(value, parameters[0], '>', 'after');
+        this.requireParameterCount(1, parameters, 'after')
+        return this.compareDates(value, parameters[0], '>', 'after')
     };
 
     /**
      * Validate the date is after or equal a given date.
      */
     validateAfterOrEqual (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(1, parameters, 'after_or_equal');
-        return this.compareDates(value, parameters[0], '>=', 'after_or_equal');
+        this.requireParameterCount(1, parameters, 'after_or_equal')
+        return this.compareDates(value, parameters[0], '>=', 'after_or_equal')
     };
 
 
@@ -80,8 +80,8 @@ class validateAttributes {
      */
     validateAlpha (value: any): boolean {
 
-        const regex = /^[a-zA-Z]+$/;
-        return typeof value === 'string' && regex.test(value);
+        const regex = /^[a-zA-Z]+$/
+        return typeof value === 'string' && regex.test(value)
     };
 
     /**
@@ -90,11 +90,11 @@ class validateAttributes {
     validateAlphaDash (value: any): boolean {
 
         if (typeof value != 'string' && typeof value != 'number') {
-            return false;
+            return false
         }
 
-        const regex = /^(?=.*[a-zA-Z0-9])[a-zA-Z0-9-_]+$/;
-        return regex.test(value.toString());
+        const regex = /^(?=.*[a-zA-Z0-9])[a-zA-Z0-9-_]+$/
+        return regex.test(value.toString())
     };
 
     /**
@@ -102,18 +102,18 @@ class validateAttributes {
      */
     validateAlphaNum (value: any): boolean {
         if (typeof value != 'string' && typeof value != 'number') {
-            return false;
+            return false
         }
 
-        const regex = /^[a-zA-Z0-9]+$/;
-        return regex.test(value.toString());
+        const regex = /^[a-zA-Z0-9]+$/
+        return regex.test(value.toString())
     }
 
     /**
      * Validate that an attribute is an array
      */
     validateArray (value: any): boolean {
-        return Array.isArray(value);
+        return Array.isArray(value)
     };
 
     /**
@@ -121,33 +121,33 @@ class validateAttributes {
      */
     validateArrayUnique (value: any): boolean {
         if (!Array.isArray(value)) {
-            return false;
+            return false
         }
 
-        return new Set(value).size === value.length;
+        return new Set(value).size === value.length
     };
 
     /**
      * Always returns true - this method will be used in conbination with other rules and will be used to stop validation of first failure
      */
     validateBail (): boolean {
-        return true;
+        return true
     };
 
     /**
      *  Validate the date is before a given date.
      */
     validateBefore (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(1, parameters, 'before');
-        return this.compareDates(value, parameters[0], '<', 'before');
+        this.requireParameterCount(1, parameters, 'before')
+        return this.compareDates(value, parameters[0], '<', 'before')
     }
 
     /**
      * Validate the date is before or equal a given date.
      */
     validateBeforeOrEqual (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(1, parameters, 'before_or_equal');
-        return this.compareDates(value, parameters[0], '<=', 'before_or_equal');
+        this.requireParameterCount(1, parameters, 'before_or_equal')
+        return this.compareDates(value, parameters[0], '<=', 'before_or_equal')
     }
 
 
@@ -157,26 +157,26 @@ class validateAttributes {
     validateBetween (value: any, parameters: number[], attribute: string): boolean {
 
         if (typeof value !== 'string' && typeof value !== 'number' && typeof value !== 'object') {
-            throw 'Validation rule between requires the field under validation to be a number, string, array, or object.';
+            throw 'Validation rule between requires the field under validation to be a number, string, array, or object.'
         }
 
-        this.requireParameterCount(2, parameters, 'between');
-        let [min, max] = parameters;
+        this.requireParameterCount(2, parameters, 'between')
+        let [min, max] = parameters
 
 
         if (isNaN(min) || isNaN(max)) {
-            throw 'Validation rule between requires both parameters to be numbers.';
+            throw 'Validation rule between requires both parameters to be numbers.'
         }
 
-        min = Number(min);
-        max = Number(max);
+        min = Number(min)
+        max = Number(max)
 
         if (min >= max) {
-            throw 'Validation rule between requires that the first parameter be greater than the second one.';
+            throw 'Validation rule between requires that the first parameter be greater than the second one.'
         }
 
-        const size = getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules));
-        return size >= min && size <= max;
+        const size = getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules))
+        return size >= min && size <= max
     };
 
 
@@ -186,35 +186,35 @@ class validateAttributes {
     validateBoolean (value: any, parameters: number[], attribute: string): boolean {
 
         if (validationRuleParser.hasRule(attribute, 'strict', this.rules)) {
-            return typeof value === 'boolean';
+            return typeof value === 'boolean'
         }
 
-        const acceptable = [true, false, 0, 1, '0', '1'];
+        const acceptable = [true, false, 0, 1, '0', '1']
 
-        return acceptable.indexOf(value) !== -1;
+        return acceptable.indexOf(value) !== -1
     };
 
     /**
      * Validate that an attribute has matching confirmation.
      */
     validateConfirmed (value: any, parameters: any, attribute: string): boolean {
-        return this.validateSame(value, [`${attribute}_confirmation`]) || this.validateSame(value, [`${attribute}Confirmation`]);
+        return this.validateSame(value, [`${attribute}_confirmation`]) || this.validateSame(value, [`${attribute}Confirmation`])
     };
 
     /**
      * Validate that an attribute is a valid date.
      */
     validateDate (value: any): boolean {
-        return toDate(value) ? true : false;
+        return toDate(value) ? true : false
     };
 
     /**
      * Validate that an attribute is equal to another date.
      */
     validateDateEquals (value: any, paramters: string[]) {
-        this.requireParameterCount(1, paramters, 'date_equals');
+        this.requireParameterCount(1, paramters, 'date_equals')
 
-        return this.compareDates(value, paramters[0], '=', 'date_equals');
+        return this.compareDates(value, paramters[0], '=', 'date_equals')
     };
 
     /**
@@ -223,49 +223,49 @@ class validateAttributes {
      * This validation rule implies the attribute is "required".
      */
     validateDeclined (value: any): boolean {
-        const acceptable = ['no', 'off', '0', 0, false, 'false'];
+        const acceptable = ['no', 'off', '0', 0, false, 'false']
 
-        return this.validateRequired(value) && acceptable.indexOf(value) !== -1;
+        return this.validateRequired(value) && acceptable.indexOf(value) !== -1
     };
 
     /**
      * Validate that an attribute was "declined" when another attribute has a given value.
      */
     validateDeclinedIf (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(2, parameters, 'declined_if');
+        this.requireParameterCount(2, parameters, 'declined_if')
 
-        const other = deepFind(this.data, parameters[0]);
+        const other = deepFind(this.data, parameters[0])
 
         if (!other) {
-            return true;
+            return true
         }
 
-        const values = parameters.slice(1);
+        const values = parameters.slice(1)
 
         if (values.indexOf(other) !== -1) {
-            return this.validateDeclined(value);
+            return this.validateDeclined(value)
         }
 
-        return true;
+        return true
     };
 
     /**
      * Validate that an attribute is different from another attribute.
      */
     validateDifferent (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(1, parameters, 'different');
+        this.requireParameterCount(1, parameters, 'different')
 
-        const other = deepFind(this.data, parameters[0]);
+        const other = deepFind(this.data, parameters[0])
 
         if (!sameType(value, other)) {
-            return true;
+            return true
         }
 
         if (value !== null && typeof value === 'object') {
-            return !deepEqual(value, other);
+            return !deepEqual(value, other)
         }
 
-        return value !== other;
+        return value !== other
     };
 
     /**
@@ -273,55 +273,55 @@ class validateAttributes {
      */
     validateDigits (value: any, parameters: any[]): boolean {
 
-        this.requireParameterCount(1, parameters, 'digits');
+        this.requireParameterCount(1, parameters, 'digits')
 
         if (isInteger(parameters[0]) === false) {
-            throw 'Validation rule digits requires the parameter to be an integer.';
+            throw 'Validation rule digits requires the parameter to be an integer.'
         }
 
         if (parameters[0] <= 0) {
-            throw 'Validation rule digits requires the parameter to be an integer greater than 0.';
+            throw 'Validation rule digits requires the parameter to be an integer greater than 0.'
         }
 
         if (typeof value !== 'string' && typeof value !== 'number') {
-            return false;
+            return false
         }
 
-        value = value.toString();
-        return /^\d+$/.test(value) && value.length === parseInt(parameters[0]);
+        value = value.toString()
+        return /^\d+$/.test(value) && value.length === parseInt(parameters[0])
     };
 
     /**
      * Validate that an attribute is between a given number of digits.
      */
     validateDigitsBetween (value: any, parameters: any[]): boolean {
-        this.requireParameterCount(2, parameters, 'digits_between');
+        this.requireParameterCount(2, parameters, 'digits_between')
 
-        let [min, max] = parameters;
+        let [min, max] = parameters
 
         if (isInteger(min) === false || isInteger(max) === false) {
-            throw 'Validation rule digits_between requires both parameters to be integers.';
+            throw 'Validation rule digits_between requires both parameters to be integers.'
         }
 
-        min = parseInt(min);
-        max = parseInt(max);
+        min = parseInt(min)
+        max = parseInt(max)
 
         if (min <= 0 || max <= 0) {
-            throw 'Validation rule digits_between requires the parameters to be an integer greater than 0.';
+            throw 'Validation rule digits_between requires the parameters to be an integer greater than 0.'
         }
 
         if (min >= max) {
-            throw 'Validation rule digits_between requires the max param to be greater than the min param.';
+            throw 'Validation rule digits_between requires the max param to be greater than the min param.'
         }
 
         if (typeof value !== 'string' && typeof value !== 'number') {
-            return false;
+            return false
         }
 
-        value = value.toString();
-        const valueLength = value.length;
+        value = value.toString()
+        const valueLength = value.length
 
-        return /^\d+$/.test(value) && valueLength >= min && valueLength <= max;
+        return /^\d+$/.test(value) && valueLength >= min && valueLength <= max
     };
 
 
@@ -331,88 +331,88 @@ class validateAttributes {
      */
     validateEmail (value: any): boolean {
         if (typeof value !== 'string') {
-            return false;
+            return false
         }
 
         /**
          * Max allowed length for a top-level-domain is 24 characters.
          * reference to list of top-level-domains: https://data.iana.org/TLD/tlds-alpha-by-domain.txt
          */
-        return value.toLowerCase().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,24})+$/) !== null;
+        return value.toLowerCase().match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,24})+$/) !== null
     };
 
     /**
      * Validate the attribute ends with a given substring.
      */
     validateEndsWith (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(1, parameters, 'ends_with');
+        this.requireParameterCount(1, parameters, 'ends_with')
 
         if (typeof value !== 'string') {
-            throw 'The field under validation must be a string';
+            throw 'The field under validation must be a string'
         }
 
-        const valueLength = value.length;
+        const valueLength = value.length
 
         for (let i = 0; i < parameters.length; i++) {
             if (typeof parameters[i] === 'string' && value.indexOf(parameters[i], valueLength - parameters[i].length) !== -1) {
-                return true;
+                return true
             }
         }
 
-        return false;
+        return false
     };
 
     /**
      * Validate that two attributes match.
      */
     validateSame (value: any, paramaters: string[]): boolean {
-        this.requireParameterCount(1, paramaters, 'same');
+        this.requireParameterCount(1, paramaters, 'same')
 
-        const other = deepFind(this.data, paramaters[0]);
+        const other = deepFind(this.data, paramaters[0])
 
         if (!sameType(value, other)) {
-            return false;
+            return false
         }
 
         if (value !== null && typeof value === 'object') {
-            return deepEqual(value, other);
+            return deepEqual(value, other)
         }
 
-        return value === other;
+        return value === other
     };
 
     /**
      * Validate the size of an attribute.
      */
     validateSize (value: any, parameters: string[], attribute: string): boolean {
-        this.requireParameterCount(1, parameters, 'size');
-        return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) === Number(parameters[0]);
+        this.requireParameterCount(1, parameters, 'size')
+        return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) === Number(parameters[0])
     };
 
     /**
      * Validate Optinial attributes. Always return true, just lets us put sometimes in rule.
      */
     validateSometimes (): boolean {
-        return true;
+        return true
     };
 
     /**
      * Validate the attribute starts with a given substring.
      */
     validateStartsWith (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(1, parameters, 'starts_with');
+        this.requireParameterCount(1, parameters, 'starts_with')
 
         if (typeof value !== 'string') {
-            throw 'The field under validation must be a string';
+            throw 'The field under validation must be a string'
         }
 
         for (let i = 0; i < parameters.length; i++) {
             if (typeof parameters[i] === 'string' && value.substr(0, parameters[i].length) === parameters[i]) {
-                return true;
+                return true
             }
         }
 
-        return false;
+        return false
     };
 
     /**
@@ -421,54 +421,54 @@ class validateAttributes {
     validateRequired (value: any): boolean {
 
         if (value === null || typeof value === 'undefined') {
-            return false;
+            return false
         } else if (typeof value === 'string' && value.trim() === '') {
-            return false;
+            return false
         } else if (Array.isArray(value) && value.length < 1) {
-            return false;
+            return false
         } else if (typeof value === 'object' && Object.keys(value).length < 1) {
-            return false;
+            return false
         }
 
-        return true;
+        return true
     };
 
     /**
      * Validate that an attribute exists when another atteribute has a given value
      */
     validateRequiredIf (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(2, parameters, 'required_if');
-        const other = deepFind(this.data, parameters[0]);
+        this.requireParameterCount(2, parameters, 'required_if')
+        const other = deepFind(this.data, parameters[0])
 
         if (typeof other === 'undefined') {
-            return true;
+            return true
         }
 
-        const values = this.parseDependentRuleParameters(other, parameters);
+        const values = this.parseDependentRuleParameters(other, parameters)
 
         if (values.indexOf(other) !== -1) {
-            return this.validateRequired(value);
+            return this.validateRequired(value)
         }
 
-        return true;
+        return true
     };
 
     /**
      * Validate that an attribute exists when another attribute does not have a given value.
      */
     validateRequiredUnless (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(2, parameters, 'required_unless');
+        this.requireParameterCount(2, parameters, 'required_unless')
 
-        let other = deepFind(this.data, parameters[0]);
-        other = typeof other === 'undefined' ? null : other;
+        let other = deepFind(this.data, parameters[0])
+        other = typeof other === 'undefined' ? null : other
 
-        const values = this.parseDependentRuleParameters(other, parameters);
+        const values = this.parseDependentRuleParameters(other, parameters)
 
         if (values.indexOf(other) === -1) {
-            return this.validateRequired(value);
+            return this.validateRequired(value)
         }
 
-        return true;
+        return true
     };
 
     /**
@@ -476,10 +476,10 @@ class validateAttributes {
      */
     validateRequiredWith (value: any, parameters: string[]): boolean {
         if (!this.allFailingRequired(parameters)) {
-            return this.validateRequired(value);
+            return this.validateRequired(value)
         }
 
-        return true;
+        return true
     };
 
     /**
@@ -487,10 +487,10 @@ class validateAttributes {
      */
     validateRequiredWithAll (value: any, parameters: string[]): boolean {
         if (!this.anyFailingRequired(parameters)) {
-            return this.validateRequired(value);
+            return this.validateRequired(value)
         }
 
-        return true;
+        return true
     };
 
     /**
@@ -498,10 +498,10 @@ class validateAttributes {
      */
     validateRequiredWithout (value: any, parameters: string[]): boolean {
         if (this.anyFailingRequired(parameters)) {
-            return this.validateRequired(value);
+            return this.validateRequired(value)
         }
 
-        return true;
+        return true
     };
 
     /**
@@ -509,10 +509,10 @@ class validateAttributes {
      */
     validateRequiredWithoutAll (value: any, parameters: string[]): boolean {
         if (this.allFailingRequired(parameters)) {
-            return this.validateRequired(value);
+            return this.validateRequired(value)
         }
 
-        return true;
+        return true
     };
 
     /**
@@ -521,11 +521,11 @@ class validateAttributes {
     anyFailingRequired (attributes: string[]): boolean {
         for (let i = 0; i < attributes.length; i++) {
             if (!this.validateRequired(deepFind(this.data, attributes[i]))) {
-                return true;
+                return true
             }
         }
 
-        return false;
+        return false
     };
 
     /**
@@ -534,18 +534,18 @@ class validateAttributes {
     allFailingRequired (attributes: string[]): boolean {
         for (let i = 0; i < attributes.length; i++) {
             if (this.validateRequired(deepFind(this.data, attributes[i]))) {
-                return false;
+                return false
             }
         }
 
-        return true;
+        return true
     };
 
     /**
      * Validate that an attribute is a string.
      */
     validateString (value: any): boolean {
-        return typeof value === 'string';
+        return typeof value === 'string'
     };
 
     /**
@@ -553,14 +553,14 @@ class validateAttributes {
     */
     validateMax (value: any, parameters: number[], attribute: string): boolean {
 
-        this.requireParameterCount(1, parameters, 'max');
+        this.requireParameterCount(1, parameters, 'max')
 
         if (isNaN(parameters[0])) {
-            throw 'Validation rule max requires parameter to be a number.';
+            throw 'Validation rule max requires parameter to be a number.'
         }
 
-        const size = getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules));
-        return size <= Number(parameters[0]);
+        const size = getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules))
+        return size <= Number(parameters[0])
 
     };
 
@@ -569,14 +569,14 @@ class validateAttributes {
      */
     validateMin (value: any, parameters: number[], attribute: string): boolean {
 
-        this.requireParameterCount(1, parameters, 'min');
+        this.requireParameterCount(1, parameters, 'min')
 
         if (isNaN(parameters[0])) {
-            throw 'Validation rule min requires parameter to be a number.';
+            throw 'Validation rule min requires parameter to be a number.'
         }
 
-        const size = getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules));
-        return size >= Number(parameters[0]);
+        const size = getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules))
+        return size >= Number(parameters[0])
     };
 
     /**
@@ -584,24 +584,24 @@ class validateAttributes {
      */
     validateNumeric (value: any, parameters: string[], attribute: string): boolean {
         if (validationRuleParser.hasRule(attribute, 'strict', this.rules) && typeof value !== 'number') {
-            return false;
+            return false
         }
 
-        return value !== null && isNaN(value) === false;
+        return value !== null && isNaN(value) === false
     };
 
     /**
      * Validate that an attribute is an object
      */
     validateObject (value: any): boolean {
-        return isObject(value);
+        return isObject(value)
     };
 
     /**
      * Validate that an attribute exists even if not filled.
      */
     validatePresent (value: any, parameters: string[], attribute: string): boolean {
-        return typeof deepFind(this.data, attribute) !== 'undefined';
+        return typeof deepFind(this.data, attribute) !== 'undefined'
     };
 
     /**
@@ -610,10 +610,10 @@ class validateAttributes {
     validateInteger (value: any, parameters: string[], attribute: string): boolean {
 
         if (validationRuleParser.hasRule(attribute, 'strict', this.rules) && typeof value !== 'number') {
-            return false;
+            return false
         }
 
-        return isInteger(value);
+        return isInteger(value)
     };
 
     /**
@@ -622,16 +622,16 @@ class validateAttributes {
     validateJson (value: any): boolean {
 
         if (!value || typeof value !== 'string') {
-            return false;
+            return false
         }
 
         try {
-            JSON.parse(value);
-        } catch (e) {
-            return false;
+            JSON.parse(value)
+        } catch {
+            return false
         }
 
-        return true;
+        return true
     };
 
 
@@ -639,92 +639,92 @@ class validateAttributes {
      * Validate that an attribute is greater than another attribute.
      */
     validateGt (value: any, parameters: any[], attribute: string): boolean {
-        this.requireParameterCount(1, parameters, 'gt');
+        this.requireParameterCount(1, parameters, 'gt')
 
         if (typeof value !== 'number' && typeof value !== 'string' && typeof value !== 'object') {
-            throw 'The field under validation must be a number, string, array or object';
+            throw 'The field under validation must be a number, string, array or object'
         }
 
-        const compartedToValue = deepFind(this.data, parameters[0]) || parameters[0];
+        const compartedToValue = deepFind(this.data, parameters[0]) || parameters[0]
 
         if (!Array.isArray(compartedToValue) && isNaN(compartedToValue) === false) {
-            return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) > compartedToValue;
+            return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) > compartedToValue
         }
 
         if (sameType(value, compartedToValue) === false) {
-            throw 'The fields under validation must be of the same type';
+            throw 'The fields under validation must be of the same type'
         }
 
-        return getSize(value) > getSize(compartedToValue);
+        return getSize(value) > getSize(compartedToValue)
     };
 
     /**
      * Validate that an attribute is greater than or equal  another attribute.
      */
     validateGte (value: any, parameters: any[], attribute: string): boolean {
-        this.requireParameterCount(1, parameters, 'gte');
+        this.requireParameterCount(1, parameters, 'gte')
 
         if (typeof value !== 'number' && typeof value !== 'string' && typeof value !== 'object') {
-            throw 'The field under validation must be a number, string, array or object';
+            throw 'The field under validation must be a number, string, array or object'
         }
 
-        const compartedToValue = deepFind(this.data, parameters[0]) || parameters[0];
+        const compartedToValue = deepFind(this.data, parameters[0]) || parameters[0]
 
         if (!Array.isArray(compartedToValue) && isNaN(compartedToValue) === false) {
-            return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) >= compartedToValue;
+            return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) >= compartedToValue
         }
 
         if (sameType(value, compartedToValue) === false) {
-            throw 'The fields under validation must be of the same type';
+            throw 'The fields under validation must be of the same type'
         }
 
-        return getSize(value) >= getSize(compartedToValue);
+        return getSize(value) >= getSize(compartedToValue)
     };
 
     /**
      * Validate that an attribute is less than another attribute.
      */
     validateLt (value: any, parameters: any[], attribute: string): boolean {
-        this.requireParameterCount(1, parameters, 'lt');
+        this.requireParameterCount(1, parameters, 'lt')
 
         if (typeof value !== 'number' && typeof value !== 'string' && typeof value !== 'object') {
-            throw 'The field under validation must be a number, string, array or object';
+            throw 'The field under validation must be a number, string, array or object'
         }
 
-        const compartedToValue = deepFind(this.data, parameters[0]) || parameters[0];
+        const compartedToValue = deepFind(this.data, parameters[0]) || parameters[0]
 
         if (!Array.isArray(compartedToValue) && isNaN(compartedToValue) === false) {
-            return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) < compartedToValue;
+            return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) < compartedToValue
         }
 
         if (sameType(value, compartedToValue) === false) {
-            throw 'The fields under validation must be of the same type';
+            throw 'The fields under validation must be of the same type'
         }
 
-        return getSize(value) < getSize(compartedToValue);
+        return getSize(value) < getSize(compartedToValue)
     };
 
     /**
      * Validate that an attribute is less than or equal another attribute.
      */
     validateLte (value: any, parameters: any[], attribute: string): boolean {
-        this.requireParameterCount(1, parameters, 'lte');
+        this.requireParameterCount(1, parameters, 'lte')
 
         if (typeof value !== 'number' && typeof value !== 'string' && typeof value !== 'object') {
-            throw 'The field under validation must be a number, string, array or object';
+            throw 'The field under validation must be a number, string, array or object'
         }
 
-        const compartedToValue = deepFind(this.data, parameters[0]) || parameters[0];
+        const compartedToValue = deepFind(this.data, parameters[0]) || parameters[0]
 
         if (!Array.isArray(compartedToValue) && isNaN(compartedToValue) === false) {
-            return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) <= compartedToValue;
+            return getSize(value, validationRuleParser.hasRule(attribute, getNumericRules(), this.rules)) <= compartedToValue
         }
 
         if (sameType(value, compartedToValue) === false) {
-            throw 'The fields under validation must be of the same type';
+            throw 'The fields under validation must be of the same type'
         }
 
-        return getSize(value) <= getSize(compartedToValue);
+        return getSize(value) <= getSize(compartedToValue)
     };
 
 
@@ -732,22 +732,22 @@ class validateAttributes {
      * Validate an attribute is contained within a list of values.
      */
     validateIn (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(1, parameters, 'in');
+        this.requireParameterCount(1, parameters, 'in')
 
         if (Array.isArray(value)) {
             for (let index = 0; index < value.length; index++) {
                 if (typeof value[index] !== 'number' && typeof value[index] !== 'string') {
-                    return false;
+                    return false
                 }
             }
-            return value.filter(element => parameters.indexOf(element.toString()) === -1).length === 0;
+            return value.filter(element => parameters.indexOf(element.toString()) === -1).length === 0
         };
 
         if (typeof value !== 'number' && typeof value !== 'string') {
-            return false;
+            return false
         }
 
-        return parameters.indexOf(value.toString()) !== -1;
+        return parameters.indexOf(value.toString()) !== -1
 
     };
 
@@ -757,42 +757,42 @@ class validateAttributes {
      * Always returns true, just lets us put "nullable" in rules.
      */
     validateNullable (): boolean {
-        return true;
+        return true
     };
 
     /**
      * Validate an attribute is not contained within a list of values.
      */
     validateNotIn (value: any, parameters: string[]): boolean {
-        this.requireParameterCount(1, parameters, 'not_in');
-        const valuesToCheck = [];
+        this.requireParameterCount(1, parameters, 'not_in')
+        const valuesToCheck = []
 
         if (Array.isArray(value)) {
             for (let index = 0; index < value.length; index++) {
                 if (typeof value[index] === 'number' || typeof value[index] === 'string') {
-                    valuesToCheck.push(value[index]);
+                    valuesToCheck.push(value[index])
                 }
             }
 
             if (valuesToCheck.length === 0) {
-                return true;
+                return true
             }
 
-            return valuesToCheck.filter(element => parameters.indexOf(element.toString()) !== -1).length === 0;
+            return valuesToCheck.filter(element => parameters.indexOf(element.toString()) !== -1).length === 0
         };
 
         if (typeof value !== 'number' && typeof value !== 'string') {
-            return true;
+            return true
         }
 
-        return parameters.indexOf(value.toString()) === -1;
+        return parameters.indexOf(value.toString()) === -1
     };
 
     /**
      * Always returns true - this method will be used in conbination with other rules
      */
     validateStrict () {
-        return true;
+        return true
     };
 
     /**
@@ -800,7 +800,7 @@ class validateAttributes {
      */
     validateUrl (value: any): boolean {
         if (typeof value !== 'string') {
-            return false;
+            return false
         }
 
         const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
@@ -808,9 +808,9 @@ class validateAttributes {
             '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
             '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
             '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+            '(\\#[-a-z\\d_]*)?$', 'i') // fragment locator
 
-        return pattern.test(value);
+        return pattern.test(value)
     };
 
 
@@ -818,19 +818,19 @@ class validateAttributes {
      *  Determine if a comparison passes between the given values.
      */
     compareDates (value: any, parameter: any, operator: string, rule: string): boolean {
-        value = toDate(value);
+        value = toDate(value)
 
         if (!value) {
-            throw `Validation rule ${rule} requires the field under valation to be a date.`;
+            throw `Validation rule ${rule} requires the field under valation to be a date.`
         }
 
-        const compartedToValue = toDate(deepFind(this.data, parameter) || parameter);
+        const compartedToValue = toDate(deepFind(this.data, parameter) || parameter)
 
         if (!compartedToValue) {
-            throw `Validation rule ${rule} requires the parameter to be a date.`;
+            throw `Validation rule ${rule} requires the parameter to be a date.`
         }
 
-        return compare(value.getTime(), compartedToValue.getTime(), operator);
+        return compare(value.getTime(), compartedToValue.getTime(), operator)
     };
 
     /**
@@ -838,7 +838,7 @@ class validateAttributes {
      */
     requireParameterCount (count: number, parameters: string[] | number[], rule: string): void {
         if (parameters.length < count) {
-            throw `Validation rule ${rule} requires at least ${count} parameters.`;
+            throw `Validation rule ${rule} requires at least ${count} parameters.`
         }
     };
 
@@ -846,23 +846,23 @@ class validateAttributes {
      * Prepare the values for validation
      */
     parseDependentRuleParameters (other: any, parameters: string[]): any[] {
-        let values: any[] = parameters.slice(1);
+        let values: any[] = parameters.slice(1)
 
         if (other === null) {
-            values = convertValuesToNull(values);
+            values = convertValuesToNull(values)
         }
 
         if (typeof other === 'number') {
-            values = convertValuesToNumber(values);
+            values = convertValuesToNumber(values)
         }
 
         if (typeof other === 'boolean') {
-            values = convertValuesToBoolean(values);
+            values = convertValuesToBoolean(values)
         }
 
-        return values;
+        return values
     }
 
 };
 
-export default validateAttributes;
+export default validateAttributes

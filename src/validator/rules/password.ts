@@ -1,8 +1,9 @@
-'use strict';
+'use strict'
 
-import { GenericCallable, GenericObject, InitialRule } from '../../Contracts/BaseContract';
-import RuleContract from './ruleContract';
-import Validator from '../validator';
+import { GenericCallable, GenericObject, InitialRule } from '../../Contracts/BaseContract'
+
+import RuleContract from './ruleContract'
+import Validator from '../validator'
 
 class Password extends RuleContract {
 
@@ -10,55 +11,55 @@ class Password extends RuleContract {
     /**
      * The validator performing the validation.
      */
-    private validator!: Validator;
+    private validator!: Validator
 
     /**
      * The minimum size of the password.
      */
-    private minLength: number = 8;
+    private minLength: number = 8
 
     /**
      * The min amount of lower case letters required in the password 
      */
-    private minLowerCase: number = 0;
+    private minLowerCase: number = 0
 
     /**
      * The min amount of uppercase letters required in the password
      */
-    private minUpperCase: number = 0;
+    private minUpperCase: number = 0
 
     /**
      * The min amount of letters required in the password
      */
-    private minLetters: number = 0;
+    private minLetters: number = 0
 
     /**
      * The min amount of letters required in the password
      */
-    private minNumbers: number = 0;
+    private minNumbers: number = 0
 
     /**
      * The min amount of symbols required in the password
      */
-    private minSymbols: number = 0;
+    private minSymbols: number = 0
 
 
     /**
      * Additional validation rules that should be merged into the default rules during validation.
      */
-    private customRules: InitialRule[] = [];
+    private customRules: InitialRule[] = []
 
 
     /**
      * The callback that will generate the "default" version of the password rule.
      */
-    static defaultCallback: Function | Password;
+    static defaultCallback: GenericCallable | Password
 
     /**
      * Create a new instance of the password class
      */
     static create (): Password {
-        return new Password();
+        return new Password()
     }
 
 
@@ -66,41 +67,41 @@ class Password extends RuleContract {
      * Set the minimum length of the password
      */
     min (min: number): Password {
-        this.minLength = min;
-        return this;
+        this.minLength = min
+        return this
     }
 
     /**
      * Set the min amount of letters required in the password
      */
     letters (letters: number = 1): Password {
-        this.minLetters = letters;
-        return this;
+        this.minLetters = letters
+        return this
     }
 
     /**
      * Set the min amount of upper and lower case letters required in the password
      */
     mixedCase (upperCase: number = 1, lowerCase: number = 1): Password {
-        this.minUpperCase = upperCase;
-        this.minLowerCase = lowerCase;
-        return this;
+        this.minUpperCase = upperCase
+        this.minLowerCase = lowerCase
+        return this
     }
 
     /**
      * Set the min amount of numbers required in the password
      */
     numbers (numbers: number = 1): Password {
-        this.minNumbers = numbers;
-        return this;
+        this.minNumbers = numbers
+        return this
     };
 
     /**
      * Set the min amount of symbols required in the password
      */
     symbols (symbols: number = 1): Password {
-        this.minSymbols = symbols;
-        return this;
+        this.minSymbols = symbols
+        return this
     }
 
     /**
@@ -110,37 +111,37 @@ class Password extends RuleContract {
 
         const validator: Validator = new Validator(this.data, {
             [attribute]: ['string', `min:${this.minLength}`, ... this.customRules]
-        }, this.validator.customMessages, this.validator.customAttributes).setLang(this.lang);
+        }, this.validator.customMessages, this.validator.customAttributes).setLang(this.lang)
 
         if (!validator.validate()) {
-            const errors: GenericObject = validator.errors().addErrorTypes().get(attribute);
+            const errors: GenericObject = validator.errors().addErrorTypes().get(attribute)
 
-            for (let key in errors) {
-                this.validator.errors().add(attribute, errors[key]);
+            for (const key in errors) {
+                this.validator.errors().add(attribute, errors[key])
             }
         }
 
         if (typeof value !== 'string') {
-            value = '';
+            value = ''
         }
 
-        let pattern;
-        const formattedAttribute = this.validator.getDisplayableAttribute(attribute);
+        let pattern
+        const formattedAttribute = this.validator.getDisplayableAttribute(attribute)
 
         if (this.minLowerCase) {
-            pattern = this.minLowerCase === 1 ? /\p{Ll}/u : new RegExp(`(.*\\p{Ll}){${this.minLowerCase}}.*`, 'u');
+            pattern = this.minLowerCase === 1 ? /\p{Ll}/u : new RegExp(`(.*\\p{Ll}){${this.minLowerCase}}.*`, 'u')
             if (!value || pattern.test(value) === false) {
                 this.validator.errors().add(attribute, {
                     error_type: 'min_lower_case',
                     message: this.trans(`password.${this.minLowerCase === 1 ? 'lower_case' : 'lower_cases'}`, {
                         attribute: formattedAttribute, amount: this.minLowerCase
                     })
-                });
+                })
             }
         }
 
         if (this.minUpperCase) {
-            pattern = this.minUpperCase === 1 ? /\p{Lu}/u : new RegExp(`(.*\\p{Lu}){${this.minUpperCase}}.*`, 'u');
+            pattern = this.minUpperCase === 1 ? /\p{Lu}/u : new RegExp(`(.*\\p{Lu}){${this.minUpperCase}}.*`, 'u')
             if (!value || pattern.test(value) === false) {
                 this.validator.errors().add(attribute, {
                     error_type: 'min_upper_case',
@@ -152,7 +153,7 @@ class Password extends RuleContract {
         }
 
         if (this.minLetters) {
-            pattern = this.minLetters === 1 ? /\p{L}/u : new RegExp(`(.*\\p{L}){${this.minLetters}}.*`, 'u');
+            pattern = this.minLetters === 1 ? /\p{L}/u : new RegExp(`(.*\\p{L}){${this.minLetters}}.*`, 'u')
             if (!value || pattern.test(value) === false) {
                 this.validator.errors().add(attribute, {
                     error_type: 'min_letters',
@@ -164,7 +165,7 @@ class Password extends RuleContract {
         }
 
         if (this.minNumbers) {
-            pattern = this.minNumbers === 1 ? /\p{N}/u : new RegExp(`(.*\\p{N}){${this.minNumbers}}.*`, 'u');
+            pattern = this.minNumbers === 1 ? /\p{N}/u : new RegExp(`(.*\\p{N}){${this.minNumbers}}.*`, 'u')
             if (!value || pattern.test(value) === false) {
                 this.validator.errors().add(attribute, {
                     error_type: 'min_numbers',
@@ -176,7 +177,7 @@ class Password extends RuleContract {
         }
 
         if (this.minSymbols) {
-            pattern = this.minSymbols === 1 ? /\p{Z}|\p{S}|\p{P}/u : new RegExp(`(.*(\\p{Z}|\\p{S}|\\p{P})){${this.minSymbols}}.*`, 'u');
+            pattern = this.minSymbols === 1 ? /\p{Z}|\p{S}|\p{P}/u : new RegExp(`(.*(\\p{Z}|\\p{S}|\\p{P})){${this.minSymbols}}.*`, 'u')
             if (!value || pattern.test(value) === false) {
                 this.validator.errors().add(attribute, {
                     error_type: 'min_symbols',
@@ -191,7 +192,7 @@ class Password extends RuleContract {
             return false
         }
 
-        return true;
+        return true
     }
 
 
@@ -199,23 +200,23 @@ class Password extends RuleContract {
      * Specify additional validation rules that should be merged with the default rules during validation.
      */
     rules (rules: InitialRule[]): Password {
-        this.customRules = rules;
-        return this;
+        this.customRules = rules
+        return this
     }
 
     /**
      * Get all the validation error messages related to the password
      */
     getMessage (): object {
-        return {};
+        return {}
     }
 
     /**
      * Set the validator instance used to validate the password
      */
     setValidator (validator: Validator): Password {
-        this.validator = validator;
-        return this;
+        this.validator = validator
+        return this
     }
 
     /**
@@ -224,27 +225,27 @@ class Password extends RuleContract {
     static setDefault (callback: GenericCallable | Password | null = null): void {
 
         if (callback instanceof Password) {
-            this.defaultCallback = callback;
-            return;
+            this.defaultCallback = callback
+            return
         }
 
         if (typeof callback !== 'function') {
-            throw 'The given callback should be callable';
+            throw 'The given callback should be callable'
         }
 
-        this.defaultCallback = callback;
+        this.defaultCallback = callback
     }
 
     /**
      * Get the default configuration of the password rule.
      */
     static default (): RuleContract | Password {
-        const password = typeof this.defaultCallback === 'function' ? this.defaultCallback() : this.defaultCallback;
+        const password = typeof this.defaultCallback === 'function' ? this.defaultCallback() : this.defaultCallback
 
-        return password instanceof RuleContract ? password : Password.create().min(8);
+        return password instanceof RuleContract ? password : Password.create().min(8)
     }
 
 };
 
-export default Password;
+export default Password
 

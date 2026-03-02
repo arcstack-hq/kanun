@@ -76,7 +76,7 @@ export class ExtendedRules extends ValidationRule {
         },
         {
             name: 'datetime',
-            validator: (value: any, parameters: string[] = [], attr) => {
+            validator: (value: any, parameters: string[] = [], _attribute) => {
                 if (typeof value !== 'string') return false
                 const [format] = parameters
 

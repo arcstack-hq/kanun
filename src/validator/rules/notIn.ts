@@ -1,25 +1,25 @@
-'use strict';
+'use strict'
 
-import BaseRule from './baseRule';
+import BaseRule from './baseRule'
 
 class NotIn extends BaseRule {
 
     /**
      * The name of the rule.
      */
-    rule: string = 'not_in';
+    rule: string = 'not_in'
 
     /**
      * The accepted values.
      */
-    values: (string|number)[] = [];
+    values: (string|number)[] = []
 
     /**
      * Create a new NotIn rule instance.
      */
     constructor(values: (string|number)[]) {
-        super();
-        this.values = values;
+        super()
+        this.values = values
     }
 
     /**
@@ -30,4 +30,4 @@ class NotIn extends BaseRule {
     }
 }
 
-export default NotIn;
+export default NotIn

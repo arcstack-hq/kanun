@@ -30,7 +30,9 @@ export default defineConfig(
       '**/bin',
       '**/dist',
       '**/public',
-      '**/node_modules'
+      '**/node_modules',
+      '**/.vitepress/dist/**',
+      '**/.vitepress/cache/**',
     ])
   ],
   {

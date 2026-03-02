@@ -1,4 +1,4 @@
-import { IMessageBag, ValidationMessageProvider } from "src/Contracts/IMessageBag"
+import { IMessageBag, ValidationMessageProvider } from 'src/Contracts/IMessageBag'
 
 export class MessageBag implements IMessageBag {
     /**

@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-import { GenericObject, ImplicitAttributes, InitialRule, Rule, Rules, ValidationRuleParserInterface } from '../../Contracts/BaseContract';
+import { GenericObject, ImplicitAttributes, InitialRule, Rule, Rules, ValidationRuleParserInterface } from '../../Contracts/BaseContract'
 
-import ClosureValidationRule from '../rules/closureValidationRule';
-import RuleContract from '../rules/ruleContract';
-import validationData from './validationData';
+import ClosureValidationRule from '../rules/closureValidationRule'
+import RuleContract from '../rules/ruleContract'
+import validationData from './validationData'
 
 const validationRuleParser: ValidationRuleParserInterface = {
     /**
@@ -15,24 +15,27 @@ const validationRuleParser: ValidationRuleParserInterface = {
      * @returns 
      */
     explodeRules: function (
-        rules: any,
+        rules: Rules | InitialRule[],
         data: GenericObject = {}
     ): { rules: Rules, implicitAttributes: ImplicitAttributes } {
 
-        let implicitAttributes: ImplicitAttributes = {};
+        const implicitAttributes: ImplicitAttributes = {}
 
-        for (let key in rules) {
+        for (const key in rules) {
             if (key.indexOf('*') !== -1) {
-                rules = this.explodeWildCardRules(rules, key, data, implicitAttributes);
-                delete rules[key];
+                rules = this.explodeWildCardRules(rules, key, data, implicitAttributes)
+                delete rules[key]
             }
-            else if (rules.hasOwnProperty(key)) {
-                rules[key] = this.explodeExplicitRules(rules[key]);
+            else if (Object.prototype.hasOwnProperty.call(rules, key) && Array.isArray(rules)) {
+                rules[Number(key)] = this.explodeExplicitRules(rules[Number(key)] as Rule[])
+            }
+            else if (Object.prototype.hasOwnProperty.call(rules, key) && !Array.isArray(rules)) {
+                rules[key] = this.explodeExplicitRules(rules[key])
             }
         }
 
         return {
-            rules, implicitAttributes
+            rules: rules as Rules, implicitAttributes
         }
     },
 
@@ -51,22 +54,22 @@ const validationRuleParser: ValidationRuleParserInterface = {
         masterData: GenericObject,
         implicitAttributes: ImplicitAttributes
     ): Rules {
-        const pattern: RegExp = new RegExp('^' + attribute.replace(/\*/g, '[^.]*') + '$');
-        const data: GenericObject = validationData.initializeAndGatherData(attribute, masterData);
-        const rule: string | InitialRule[] = results[attribute];
+        const pattern: RegExp = new RegExp('^' + attribute.replace(/\*/g, '[^.]*') + '$')
+        const data: GenericObject = validationData.initializeAndGatherData(attribute, masterData)
+        const rule: string | InitialRule[] = results[attribute]
 
-        for (let key in data) {
+        for (const key in data) {
             if (key.slice(0, attribute.length) === attribute || key.match(pattern) !== null) {
                 if (Array.isArray(implicitAttributes[attribute])) {
-                    implicitAttributes[attribute].push(key);
+                    implicitAttributes[attribute].push(key)
                 } else {
-                    implicitAttributes[attribute] = [key];
+                    implicitAttributes[attribute] = [key]
                 }
-                results = this.mergeRulesForAttribute(results, key, rule);
+                results = this.mergeRulesForAttribute(results, key, rule)
             }
         }
 
-        return results;
+        return results
     },
 
     /**
@@ -82,10 +85,10 @@ const validationRuleParser: ValidationRuleParserInterface = {
         attribute: string,
         rules: string | InitialRule[]
     ): Rules {
-        const merge = this.explodeRules([rules]).rules[0];
-        results[attribute] = [...results[attribute] ? this.explodeExplicitRules(results[attribute]) : [], ...merge];
+        const merge = this.explodeRules([rules]).rules[0]
+        results[attribute] = [...results[attribute] ? this.explodeExplicitRules(results[attribute]) : [], ...merge]
 
-        return results;
+        return results
     },
 
     /**
@@ -93,14 +96,14 @@ const validationRuleParser: ValidationRuleParserInterface = {
      */
     explodeExplicitRules: function (rules: InitialRule | InitialRule[]): Rule[] {
         if (typeof rules === 'string') {
-            return rules.split('|');
+            return rules.split('|')
         }
 
         if (!Array.isArray(rules)) {
-            return [this.prepareRule(rules)];
+            return [this.prepareRule(rules)]
         }
 
-        return rules.map((rule: InitialRule) => this.prepareRule(rule));
+        return rules.map((rule: InitialRule) => this.prepareRule(rule))
     },
 
     /**
@@ -109,14 +112,14 @@ const validationRuleParser: ValidationRuleParserInterface = {
     prepareRule (rule: InitialRule): Rule {
 
         if (typeof rule === 'function') {
-            return new ClosureValidationRule(rule);
+            return new ClosureValidationRule(rule)
         }
 
         if (rule instanceof RuleContract) {
-            return rule;
+            return rule
         }
 
-        return rule.toString();
+        return rule.toString()
     },
 
     /**
@@ -124,10 +127,10 @@ const validationRuleParser: ValidationRuleParserInterface = {
      */
     parse (rule: Rule): [Rule, string[]] {
         if (rule instanceof RuleContract) {
-            return [rule, []];
+            return [rule, []]
         }
 
-        return this.parseStringRule(rule);
+        return this.parseStringRule(rule)
     },
 
     /**
@@ -135,16 +138,16 @@ const validationRuleParser: ValidationRuleParserInterface = {
      */
     parseStringRule: function (rule: string): [string, string[]] {
 
-        let parameters: string[] = [];
-        let parameter: string;
+        let parameters: string[] = []
+        let parameter: string
 
         if (rule.indexOf(':') !== -1) {
-            [rule, parameter] = rule.split(/:(.+)/);
+            [rule, parameter] = rule.split(/:(.+)/)
 
-            parameters = parameter.split(',');
+            parameters = parameter.split(',')
         }
 
-        return [rule, parameters];
+        return [rule, parameters]
     },
 
     /**
@@ -165,33 +168,33 @@ const validationRuleParser: ValidationRuleParserInterface = {
         // { name: ['required', 'string'], age: ['required', 'gt:10']}
         // A valid attribute in that case would be age
         if (!availableRules[attribute]) {
-            return [];
+            return []
         }
 
         // The search rule can be either a string or an array - lets say we want check if the 'gt' rule exists for 
         // the age attrtibute - in that case the serachRules will be equal to 'gt' - In case an array is used
         // the method will return the data for the first matched rule
-        searchRules = Array.isArray(searchRules) ? searchRules : [searchRules];
+        searchRules = Array.isArray(searchRules) ? searchRules : [searchRules]
 
         for (let i = 0; i < availableRules[attribute].length; i++) {
-            let [rule, parameters] = this.parse(availableRules[attribute][i]);
+            const [rule, parameters] = this.parse(availableRules[attribute][i])
 
             if (searchRules.indexOf(rule as string) !== -1) {
                 // return the rule and parameters for the first match
-                return [rule as never, parameters];
+                return [rule as never, parameters]
             }
         }
 
-        return [];
+        return []
     },
 
     /**
      * Determine if the given attribute has a rule in the given set of available rules.
      */
     hasRule: function (attribute: string, searchRules: string | string[], availableRules: Rules): boolean {
-        return this.getRule(attribute, searchRules, availableRules).length > 0;
+        return this.getRule(attribute, searchRules, availableRules).length > 0
     },
-};
+}
 
 
-export default validationRuleParser;
+export default validationRuleParser

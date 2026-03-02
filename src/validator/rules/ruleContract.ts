@@ -1,54 +1,54 @@
-'use strict';
+'use strict'
 
-import { GenericObject } from 'src/Contracts/BaseContract';
-import Lang from '../lang';
-import { deepFind } from '../utils/object';
+import { GenericObject } from 'src/Contracts/BaseContract'
+import Lang from '../lang'
+import { deepFind } from '../utils/object'
 
 export default class RuleContract {
 
     /**
      * The validation error message.
      */
-    message: string | object = '';
+    message: string | object = ''
 
     /**
      * All of the data under validation.
      */
-    data: object = {};
+    data: object = {}
 
     /**
      * The lang used to return error messages
      */
-    lang!: string;
+    lang!: string
 
     /**
      *  Determine if the validation rule passes.
      */
-    passes (value: any, attribute: string): boolean | Promise<boolean> {
-        return true;
+    passes (_value: any, _attribute: string): boolean | Promise<boolean> {
+        return true
     };
 
     /**
      * Get the validation error message.
      */
     getMessage (): string | object {
-        return this.message;
+        return this.message
     };
 
     /**
      * Set the data under validation.
      */
     setData (data: object): RuleContract {
-        this.data = data;
-        return this;
+        this.data = data
+        return this
     };
 
     /**
      * Set the tranlation language
      */
     setLang (lang: string): RuleContract {
-        this.lang = lang;
-        return this;
+        this.lang = lang
+        return this
     };
 
     /**
@@ -56,18 +56,18 @@ export default class RuleContract {
      */
     trans (path: string, params: GenericObject = {}): string {
 
-        const validatonMessages = Lang.get(this.lang);
-        let message: string = deepFind(validatonMessages, path) || '';
+        const validatonMessages = Lang.get(this.lang)
+        let message: string = deepFind(validatonMessages, path) || ''
 
         if (!message) {
-            return message;
+            return message
         }
 
-        for (let key in params) {
-            message = message.replace(`:${key}`, params[key]);
+        for (const key in params) {
+            message = message.replace(`:${key}`, params[key])
         }
 
-        return message;
+        return message
     }
 
 }
