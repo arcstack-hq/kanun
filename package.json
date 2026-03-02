@@ -1,30 +1,20 @@
 {
   "name": "kanun",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Framework-agnostic TypeScript-first validation library.",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "types": "./dist/index.d.cts",
-  "module": "./dist/index.mjs",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    },
-    "./package.json": "./package.json"
-  },
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "access": "public",
-    "exports": {
-      ".": {
-        "import": "./dist/index.js",
-        "require": "./dist/index.cjs"
-      },
-      "./*": "./*"
-    }
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "homepage": "https://arcstack-hq.github.io/kanun",
   "repository": {
