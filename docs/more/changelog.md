@@ -8,11 +8,6 @@ The format follows semantic versioning principles.
 
 ### Added
 
-- Add a practical README usage guide with quickstart examples for validation, custom messages, nested fields, custom rules, and database-backed `exists`/`unique` rules.
-- Expand VitePress documentation with complete guide pages (`getting-started`, `validation-rules`, `database-driver`, `custom-rules`, `error-handling`).
-- Replace placeholder API docs with package-specific references for `Validator`, `ValidationRule`, `ValidationException`, and `IDatabaseDriver`.
-- Update VitePress navigation/sidebar to expose all documentation sections.
-
 ### Planned
 
 - Plugin System: Introduce a first-class plugin architecture to extend Kanun without modifying core behavior. This will allow developers to add custom validation rules, integrate with third-party libraries, and provide hooks for custom error handling and message formatting.
