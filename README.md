@@ -5,7 +5,7 @@
 [![Tests][tei]][tel]
 [![License][lini]][linl]
 
-Lightweight framework-agnostic and TypeScript-first validation library. Provides a rich set of built-in rules, custom rule support, nested data validation, conditional rules, localized error messages, and a flexible API for validating complex data structures in Node.js applications.
+Framework-agnostic TypeScript-first validation library. Provides a rich set of built-in rules, custom rule support, nested data validation, conditional rules, localized error messages, and a flexible API for validating complex data structures in Node.js applications.
 
 ## Installation
 

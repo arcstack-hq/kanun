@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: 'Kanun'
-  tagline: Lightweight framework-agnostic and TypeScript-first validation library
+  tagline: Framework-agnostic TypeScript-first validation library
   image:
     src: /banner.jpg
     alt: Kanun Banner

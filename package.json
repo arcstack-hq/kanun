@@ -1,7 +1,7 @@
 {
   "name": "kanun",
-  "version": "0.1.1",
-  "description": "Lightweight framework-agnostic and TypeScript-first validation library.",
+  "version": "0.1.2",
+  "description": "Framework-agnostic TypeScript-first validation library.",
   "type": "module",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.cts",
