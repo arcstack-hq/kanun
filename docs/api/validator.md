@@ -10,11 +10,11 @@ new Validator(data, rules, messages?)
 
 ### Parameters
 
-| Name       | Type                     | Description               |
-| ---------- | ------------------------ | ------------------------- | ---------------- | ---------------- |
-| `data`     | `Record<string, any>`    | Input payload to validate |
-| `rules`    | `Record<string, string   | string[]                  | ValidationRule>` | Validation rules |
-| `messages` | `Record<string, string>` | Optional custom messages  |
+| Name       | Type                                               | Description               |
+| ---------- | -------------------------------------------------- | ------------------------- |
+| `data`     | `Record<string, any>`                              | Input payload to validate |
+| `rules`    | `Record<string, string\|string[]\|ValidationRule>` | Validation rules          |
+| `messages` | `Record<string, string>`                           | Optional custom messages  |
 
 ## Factory
 
