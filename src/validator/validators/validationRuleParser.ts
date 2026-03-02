@@ -111,12 +111,12 @@ const validationRuleParser: ValidationRuleParserInterface = {
      */
     prepareRule (rule: InitialRule): Rule {
 
-        if (typeof rule === 'function') {
-            return new ClosureValidationRule(rule)
-        }
-
         if (rule instanceof RuleContract) {
             return rule
+        }
+
+        if (typeof rule === 'function') {
+            return new ClosureValidationRule(rule as never)
         }
 
         return rule.toString()

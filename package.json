@@ -61,6 +61,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^20.11.0",
+    "@vitest/coverage-v8": "4.0.18",
     "barrelize": "^1.7.4",
     "eslint": "^10.0.2",
     "tsdown": "0.21.0-beta.2",
