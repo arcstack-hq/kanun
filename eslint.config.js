@@ -5,15 +5,20 @@ import tseslint from 'typescript-eslint'
 
 export default defineConfig(
   {
-    env: {
-      browser: true,
-      node: true
-    },
+    // env: {
+    //   browser: true,
+    //   node: true
+    // },
     languageOptions: {
       parserOptions: {
-        // eslint-disable-next-line no-undef
         tsconfigRootDir: process.cwd()
       },
+      globals: {
+        process: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        console: 'readonly',
+      }
     },
   },
   js.configs.recommended,

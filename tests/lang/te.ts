@@ -8,4 +8,4 @@ export default {
             translated_password: 'user translated password'
         }
     }
-};
+}

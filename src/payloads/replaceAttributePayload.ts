@@ -1,6 +1,6 @@
 'use strict'
 
-import type { GenericObject } from "src/Contracts/IGeneric"
+import type { GenericObject } from 'src/Contracts/IGeneric'
 
 class replaceAttributePayload {
 

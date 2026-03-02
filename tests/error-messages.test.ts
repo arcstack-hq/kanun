@@ -119,7 +119,7 @@ describe('Format Attributes', function () {
             assert.equal(validator.errors().first(), 'The user last name field is required.')
         })
         it('Attributes with wild card nested rules can also be specified and fetched from the translation file', function () {
-            let validator = make({ user: { translated_numbers: ['test'] } }, { 'user.translated_numbers.*': 'integer' })
+            const validator = make({ user: { translated_numbers: ['test'] } }, { 'user.translated_numbers.*': 'integer' })
             validator.validate()
             assert.equal(validator.errors().first(), 'The user course must be an integer.')
 

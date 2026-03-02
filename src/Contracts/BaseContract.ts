@@ -1,7 +1,7 @@
 'use strict'
 
 import BaseRule from '../Rules/baseRule'
-import { GenericObject } from './IGeneric';
+import { GenericObject } from './IGeneric'
 import RuleContract from '../Rules/IRuleContract'
 import replaceAttributePayload from '../payloads/replaceAttributePayload'
 

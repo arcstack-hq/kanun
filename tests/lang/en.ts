@@ -43,4 +43,4 @@ export default {
             'custom_last_name.required': 'The user last name must be present.'
         }
     }
-};
+}

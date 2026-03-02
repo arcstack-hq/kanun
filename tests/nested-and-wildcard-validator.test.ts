@@ -6,7 +6,7 @@ const validator = make()
 
 describe('Nested Objects', function () {
 
-    let data = {
+    const data = {
         name: 'Jad',
         address: 'Test',
         bio: {
@@ -46,10 +46,10 @@ describe('Nested Objects', function () {
     })
     it('Error keys should be returned for all the failed validations', function () {
         const errors = validator.errors().all()
-        assert.ok(errors.hasOwnProperty('name'))
-        assert.ok(errors.hasOwnProperty('address'))
-        assert.ok(errors.hasOwnProperty('bio.age'))
-        assert.ok(errors.hasOwnProperty('bio.education.secondary'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'name'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'address'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'bio.age'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'bio.education.secondary'))
     })
     it('Error messages should be returned for all the failed validations', function () {
         const errors = validator.errors().all(false)
@@ -81,7 +81,7 @@ describe('Nested Objects', function () {
 })
 
 describe('Nested objects with flattened rules', function () {
-    let data = {
+    const data = {
         name: 'Jad',
         address: 'Test',
         bio: {
@@ -118,10 +118,10 @@ describe('Nested objects with flattened rules', function () {
     })
     it('Error keys should be returned for all the failed validations', function () {
         const errors = validator.errors().all()
-        assert.ok(errors.hasOwnProperty('name'))
-        assert.ok(errors.hasOwnProperty('address'))
-        assert.ok(errors.hasOwnProperty('bio.age'))
-        assert.ok(errors.hasOwnProperty('bio.education.secondary'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'name'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'address'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'bio.age'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'bio.education.secondary'))
     })
     it('Error messages should be returned for all the failed validations', function () {
         const errors = validator.errors().all(false)
@@ -154,7 +154,7 @@ describe('Nested objects with flattened rules', function () {
 
 
 describe('Wildcard rules', function () {
-    let rules = {
+    const rules = {
         'users.*.name': 'required|string',
         'users.*.bio.age': ['required', 'integer', 'min:18'],
         'users.*.bio.education.*.level': 'string',
@@ -197,9 +197,9 @@ describe('Wildcard rules', function () {
     })
     it('Error keys should be returned for all the failed validations', function () {
         const errors = validator.errors().all()
-        assert.ok(errors.hasOwnProperty('users.1.name'))
-        assert.ok(errors.hasOwnProperty('users.0.bio.age'))
-        assert.ok(errors.hasOwnProperty('users.0.bio.education.1.institute'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'users.1.name'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'users.0.bio.age'))
+        assert.ok(Object.prototype.hasOwnProperty.call(errors, 'users.0.bio.education.1.institute'))
     })
     it('Error messages should be returned for all the failed validations', function () {
         const errors = validator.errors().all(false)
