@@ -1,6 +1,5 @@
 export * from './BaseValidator'
 export * from './Contracts/BaseContract'
-export * from './Contracts/Exports'
 export * from './Contracts/IDatabaseDriver'
 export * from './Contracts/IGeneric'
 export * from './Contracts/IMessageBag'

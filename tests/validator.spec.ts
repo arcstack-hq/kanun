@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
+import { IDatabaseDriver } from '../src'
 import { ValidationException } from '../src/ValidationException'
-import { type IDatabaseDriver } from '../src'
-import { Validator } from '../src/Validator'
 import { ValidationRule } from 'src'
+import { Validator } from '../src/Validator'
 
 describe('Validator', () => {
     describe('basic rules', () => {
@@ -187,8 +187,8 @@ describe('Validator', () => {
     })
 
     describe('extended rules', () => {
-        const driver: IDatabaseDriver = {
-            exists: ({ table, column, value, ignore }) => {
+        class DatabaseDriver extends IDatabaseDriver {
+            exists ({ table, column, value, ignore }: { table: string, column: string, value: any, ignore?: any }) {
                 const records: Record<string, Array<Record<string, any>>> = {
                     users: [
                         { id: 1, username: 'legacy', email: 'legacy@example.com' },
@@ -203,6 +203,8 @@ describe('Validator', () => {
                 })
             }
         }
+
+        const driver = new DatabaseDriver()
 
         it('includes: should validate included item in the given list of values.', async () => {
             const v = new Validator(

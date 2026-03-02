@@ -120,6 +120,8 @@ const validator = new Validator(data, {
 });
 ```
 
+Both rules delegate to `driver.exists(input)`.
+
 You can also set it per instance:
 
 ```ts

@@ -8,6 +8,6 @@ export interface ValidationDatabaseExistsInput {
     data?: Record<string, any>
 }
 
-export interface IDatabaseDriver {
-    exists (input: ValidationDatabaseExistsInput): boolean | Promise<boolean>
+export abstract class IDatabaseDriver {
+    abstract exists (input: ValidationDatabaseExistsInput): boolean | Promise<boolean>
 }

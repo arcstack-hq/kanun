@@ -5,14 +5,16 @@
 ## Import
 
 ```ts
-import type { IDatabaseDriver, ValidationDatabaseExistsInput } from 'kanun';
+import { IDatabaseDriver, type ValidationDatabaseExistsInput } from 'kanun';
 ```
 
-## Interface
+## Abstract Class
 
 ```ts
-interface IDatabaseDriver {
-  exists(input: ValidationDatabaseExistsInput): boolean | Promise<boolean>;
+abstract class IDatabaseDriver {
+  abstract exists(
+    input: ValidationDatabaseExistsInput,
+  ): boolean | Promise<boolean>;
 }
 ```
 
@@ -33,7 +35,7 @@ interface ValidationDatabaseExistsInput {
 ## Example Adapter
 
 ```ts
-const driver: IDatabaseDriver = {
+class AppDatabaseDriver extends IDatabaseDriver {
   async exists({ table, column, value, ignore }) {
     const row = await db.table(table).where(column, value).first();
 
@@ -41,9 +43,13 @@ const driver: IDatabaseDriver = {
     if (ignore != null && String(row.id) === String(ignore)) return false;
 
     return true;
-  },
-};
+  }
+}
+
+const driver = new AppDatabaseDriver();
 ```
+
+`exists` and `unique` rules both call this same `exists(input)` method.
 
 Register globally:
 

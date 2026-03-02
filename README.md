@@ -127,16 +127,18 @@ const validator = new Validator(
 ### Database-backed `exists` and `unique`
 
 ```ts
-import { Validator, type IDatabaseDriver } from 'kanun';
+import { IDatabaseDriver, Validator } from 'kanun';
 
-const driver: IDatabaseDriver = {
+class AppDatabaseDriver extends IDatabaseDriver {
   async exists({ table, column, value, ignore }) {
     const row = await db.table(table).where(column, value).first();
     if (!row) return false;
     if (ignore != null && String(row.id) === String(ignore)) return false;
     return true;
-  },
-};
+  }
+}
+
+const driver = new AppDatabaseDriver();
 
 Validator.useDatabase(driver);
 

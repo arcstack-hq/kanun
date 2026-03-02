@@ -9,9 +9,9 @@ The validation package stays framework-agnostic and does not hard-couple to a sp
 ## Registering a Global Driver
 
 ```ts
-import { Validator, type IDatabaseDriver } from 'kanun';
+import { IDatabaseDriver, Validator } from 'kanun';
 
-const driver: IDatabaseDriver = {
+class AppDatabaseDriver extends IDatabaseDriver {
   async exists({ table, column, value, ignore }) {
     const row = await db.table(table).where(column, value).first();
 
@@ -19,8 +19,10 @@ const driver: IDatabaseDriver = {
     if (ignore != null && String(row.id) === String(ignore)) return false;
 
     return true;
-  },
-};
+  }
+}
+
+const driver = new AppDatabaseDriver();
 
 Validator.useDatabase(driver);
 ```
@@ -42,6 +44,13 @@ const validator = new Validator(
   },
 );
 ```
+
+## How `unique` Works
+
+Kanun calls `driver.exists(input)` for both `exists` and `unique` rules.
+
+- `exists` passes when `exists(input)` returns `true`
+- `unique` passes when `exists(input)` returns `false`
 
 ## Rule Parameter Format
 
