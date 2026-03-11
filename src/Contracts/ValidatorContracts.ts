@@ -16,6 +16,13 @@ export type ExtractRules<R> =
     ? ExtractRules<R[number]>
     : never
 
+export type ValidatedByRules<
+    D extends Record<string, any>,
+    R extends RulesForData<D>
+> = {
+        [K in Extract<keyof R, keyof D>]: D[K]
+    }
+
 /**
  * Flatten data structure into dot-notation keys
  * including wildcards (*) for arrays.

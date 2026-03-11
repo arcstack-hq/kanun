@@ -7,14 +7,14 @@ import { default as PasswordRule } from './Rules/password'
 
 export class Password extends PasswordRule { };
 
-export function make (
-    data: GenericObject = {},
-    rules: InitialRules = {},
-    customMessages: CustomMessages = {},
-    customAttributes: CustomAttributes = {}
-): BaseValidator {
-    return new BaseValidator(data, rules, customMessages, customAttributes)
-};
+export function make<D extends GenericObject = GenericObject> (
+    data: D = {} as D,
+    rules: InitialRules<D> = {} as InitialRules<D>,
+    customMessages: CustomMessages<D> = {} as CustomMessages<D>,
+    customAttributes: CustomAttributes<D> = {} as CustomAttributes<D>
+): BaseValidator<D> {
+    return new BaseValidator<D>(data, rules, customMessages, customAttributes)
+}
 
 export {
     InitialRules,

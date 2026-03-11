@@ -26,7 +26,7 @@ import validateAttributes from './validators/validateAttributes'
 import validationData from './validators/validationData'
 import validationRuleParser from './validators/validationRuleParser'
 
-export class BaseValidator {
+export class BaseValidator<D extends GenericObject = GenericObject> {
 
     /**
      * The lang used to return error messages
@@ -36,7 +36,7 @@ export class BaseValidator {
     /**
      * The data object that will be validated
      */
-    private data: object
+    private data: D
 
     /**
      * The rules that will be used to check the validity of the data
@@ -46,7 +46,7 @@ export class BaseValidator {
     /**
      * This is an unchanged version of the inital rules before being changed for wildcard validations
      */
-    private initalRules: InitialRules
+    private initalRules: InitialRules<any>
 
     /**
      * The array of wildcard attributes with their asterisks expanded.
@@ -74,15 +74,15 @@ export class BaseValidator {
     /**
      * Custom messages returned based on the error
      */
-    customMessages: CustomMessages
+    customMessages: CustomMessages<D>
 
     /**
      * Object of custom attribute name;
      */
-    customAttributes: CustomAttributes
+    customAttributes: CustomAttributes<D>
 
 
-    constructor(data: object, rules: InitialRules, customMessages: CustomMessages = {}, customAttributes: CustomAttributes = {}) {
+    constructor(data: D, rules: InitialRules<D>, customMessages: CustomMessages<D> = {}, customAttributes: CustomAttributes<D> = {}) {
         this.data = data
         this.customMessages = dotify(customMessages)
         this.customAttributes = dotify(customAttributes)
@@ -92,13 +92,13 @@ export class BaseValidator {
         this.messages = new ErrorBag()
     };
 
-    setData (data: object): this {
-        this.data = data
-        this.addRules(this.initalRules)
-        return this
+    setData<ND extends GenericObject> (data: ND): BaseValidator<ND> {
+        this.data = data as unknown as D
+        this.addRules(this.initalRules as InitialRules<D>)
+        return this as unknown as BaseValidator<ND>
     };
 
-    setRules (rules: InitialRules): this {
+    setRules (rules: InitialRules<D>): this {
         this.addRules(rules)
         this.initalRules = rules
         return this
@@ -113,12 +113,12 @@ export class BaseValidator {
         return this.lang
     }
 
-    setCustomMessages (customMessages: CustomMessages = {}): this {
+    setCustomMessages (customMessages: CustomMessages<D> = {}): this {
         this.customMessages = dotify(customMessages)
         return this
     };
 
-    setCustomAttributes (customAttributes: CustomAttributes = {}): this {
+    setCustomAttributes (customAttributes: CustomAttributes<D> = {}): this {
         this.customAttributes = dotify(customAttributes)
         return this
     };
@@ -377,7 +377,7 @@ export class BaseValidator {
     /**
      * Parse the given rules add assign them to the current rules
      */
-    private addRules (rules: InitialRules): void {
+    private addRules (rules: InitialRules<D>): void {
 
         // The primary purpose of this parser is to expand any "*" rules to the all
         // of the explicit rules needed for the given data. For example the rule

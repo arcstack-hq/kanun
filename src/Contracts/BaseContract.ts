@@ -9,21 +9,58 @@ export type InitialRule = string | ValidationCallback | RuleContract | BaseRule;
 
 export type TRule = string | RuleContract;
 
-export interface InitialRules extends GenericObject {
-    [key: string]: InitialRule | InitialRule[]
-};
+export type NestedStringMap = {
+    [key: string]: string | NestedStringMap
+}
 
-export interface Rules extends GenericObject {
-    [key: string]: TRule[]
-};
+type RuleLeaf = InitialRule | InitialRule[]
+
+type KnownRulePaths<X extends GenericObject, Prefix extends string = ''> = {
+    [K in keyof X & string]:
+    X[K] extends (infer A)[]
+    ? | `${Prefix}${K}`
+    | `${Prefix}${K}.*`
+    | (A extends GenericObject ? `${Prefix}${K}.*.${KnownRulePaths<A>}` : never)
+    : X[K] extends GenericObject
+    ? | `${Prefix}${K}`
+    | `${Prefix}${K}.${KnownRulePaths<X[K]>}`
+    : `${Prefix}${K}`
+}[keyof X & string]
+
+type LooseNestedRulePaths<X extends GenericObject> = {
+    [K in keyof X & string]:
+    X[K] extends (infer _A)[]
+    ? `${K}.*.${string}`
+    : X[K] extends GenericObject
+    ? `${K}.${string}`
+    : never
+}[keyof X & string]
+
+type ScopedInitialRules<X extends GenericObject> =
+    & Partial<Record<KnownRulePaths<X> | LooseNestedRulePaths<X>, RuleLeaf>>
+    & {
+        [K in keyof X & string]?:
+        X[K] extends (infer A)[]
+        ? RuleLeaf | (A extends GenericObject ? ScopedInitialRules<A> : never)
+        : X[K] extends GenericObject
+        ? RuleLeaf | ScopedInitialRules<X[K]>
+        : RuleLeaf
+    }
+
+export type InitialRules<X extends GenericObject = GenericObject> =
+    ScopedInitialRules<keyof X extends never ? GenericObject : X>
+
+export type Rules<X extends GenericObject = GenericObject> =
+    & Partial<Record<Extract<keyof X, string>, TRule[]>>
+    & Record<string, TRule[]>
 
 export interface ImplicitAttributes {
     [key: string]: string[]
 }
 
-export type CustomMessages = GenericObject & {};
+export type CustomMessages<_X extends GenericObject = GenericObject> = GenericObject
 
-export type CustomAttributes = GenericObject & {};
+export type CustomAttributes<_X extends GenericObject = GenericObject> = GenericObject
 
 export interface ErrorMessage {
     error_type?: string,

@@ -1,4 +1,4 @@
-import type { DotPaths, MessagesForRules, RulesForData } from './ValidatorContracts'
+import type { DotPaths, MessagesForRules, RulesForData, ValidatedByRules } from './ValidatorContracts'
 
 import type { BaseValidationRuleClass } from './RuleBuilder'
 import type { IDatabaseDriver } from './IDatabaseDriver'
@@ -44,14 +44,14 @@ export declare class IValidator<
      * 
      * @throws ValidationException if validation fails
      */
-    public validate (): Promise<Record<string, any>>
+    public validate (): Promise<ValidatedByRules<D, R>>;
 
     /**
      * Run the validator's rules against its data.
      * @param bagName 
      * @returns 
      */
-    validateWithBag (bagName: string): Promise<Record<string, any>>
+    validateWithBag (bagName: string): Promise<ValidatedByRules<D, R>>
 
     /**
      * Stop validation on first failure.
@@ -61,7 +61,7 @@ export declare class IValidator<
     /**
      * Get the data that passed validation.
      */
-    public validatedData (): Record<string, any>
+    public validatedData (): ValidatedByRules<D, R>
 
     /**
      * Return all validated input.
@@ -119,7 +119,7 @@ export declare class IValidator<
     /**
      * Get current data.
      */
-    public getData (): Record<string, any>
+    public getData (): ValidatedByRules<D, R>
 
     /**
      * Get current rules.

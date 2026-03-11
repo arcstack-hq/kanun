@@ -1,5 +1,5 @@
 import { BaseValidationRuleClass, CustomValidationRules } from './Contracts/RuleBuilder'
-import { DotPaths, MessagesForRules, RulesForData } from './Contracts/ValidatorContracts'
+import { DotPaths, MessagesForRules, RulesForData, type ValidatedByRules } from './Contracts/ValidatorContracts'
 import { make, register } from './Core'
 
 import type BaseValidator from './BaseValidator'
@@ -98,7 +98,7 @@ export class Validator<
      * 
      * @throws ValidationException if validation fails
      */
-    public async validate (): Promise<Record<string, any>> {
+    public async validate (): Promise<ValidatedByRules<D, R>> {
         const ok = await this.passes()
 
         if (!ok) {
@@ -130,13 +130,13 @@ export class Validator<
     /**
      * Get the data that passed validation.
      */
-    public validatedData (): Record<string, any> {
+    public validatedData (): ValidatedByRules<D, R> {
         const validKeys = Object.keys(this.rules)
         const clean: Record<string, any> = {}
         for (const key of validKeys) {
             if (this.data[key] !== undefined) clean[key] = this.data[key]
         }
-        return clean
+        return clean as ValidatedByRules<D, R>
     }
 
 
@@ -241,7 +241,7 @@ export class Validator<
     /**
      * Get current data.
      */
-    public getData (): Record<string, any> {
+    public getData (): ValidatedByRules<D, R> {
         return this.data
     }
 
