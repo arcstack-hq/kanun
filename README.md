@@ -148,11 +148,11 @@ const validator = new Validator(
 );
 ```
 
-For the complete guide and API reference, visit the docs site: https://arcstack-hq.github.io/kanun
+For the complete guide and API reference, visit the docs site: https://arkstack-hq.github.io/kanun
 
 ## Code of Conduct
 
-In order to ensure that the Kanun community is welcoming to all, please review and abide by the [Code of Conduct](https://arcstack-hq.github.io/code-of-conduct).
+In order to ensure that the Kanun community is welcoming to all, please review and abide by the [Code of Conduct](https://arkstack-hq.github.io/code-of-conduct).
 
 ## Security Vulnerabilities
 
@@ -160,12 +160,12 @@ If you discover a security vulnerability within Kanun, please send an e-mail to 
 
 ## License
 
-Kanun and all Arcstack packages are open source and licensed under the [MIT license](LICENSE).
+Kanun and all Arkstack packages are open source and licensed under the [MIT license](LICENSE).
 
 [i1]: https://img.shields.io/npm/v/kanun?style=flat-square&label=kanun&color=%230970ce
 [l1]: https://www.npmjs.com/package/kanun
 [d1]: https://img.shields.io/npm/dt/kanun?style=flat-square&label=Downloads&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fkanun
-[linl]: https://github.com/arcstack-hq/kanun/blob/main/LICENSE
-[lini]: https://img.shields.io/github/license/arcstack-hq/kanun
-[tel]: https://github.com/arcstack-hq/kanun/actions/workflows/ci.yml
-[tei]: https://github.com/arcstack-hq/kanun/actions/workflows/ci.yml/badge.svg
+[linl]: https://github.com/arkstack-hq/kanun/blob/main/LICENSE
+[lini]: https://img.shields.io/github/license/arkstack-hq/kanun
+[tel]: https://github.com/arkstack-hq/kanun/actions/workflows/ci.yml
+[tei]: https://github.com/arkstack-hq/kanun/actions/workflows/ci.yml/badge.svg
