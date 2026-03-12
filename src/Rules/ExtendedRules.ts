@@ -1,7 +1,7 @@
 import { ValidationRule } from '../ValidationRule'
 import { ValidationRuleCallable } from 'src/Contracts/RuleBuilder'
 import type { Validator } from '../Validator'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
+import customParseFormat from 'dayjs/plugin/customParseFormat.js'
 import dayjs from 'dayjs'
 
 dayjs.extend(customParseFormat)
