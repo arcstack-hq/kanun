@@ -28,7 +28,7 @@ export default {
     digits_between: ':attribute doit contenir entre :min et :max chiffres.',
     email: ':attribute doit être une adresse e-mail valide.',
     ends_with: ':attribute doit se terminer par l\'une des valeurs suivantes : :values.',
-    exists: ':value n\'est pas un :attribute valide.',
+    exists: ':attribute sélectionné est invalide.',
     gt: {
         number: ':attribute doit être supérieur à :value.',
         string: ':attribute doit contenir plus de :value caractères.',

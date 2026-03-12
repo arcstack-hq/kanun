@@ -27,7 +27,7 @@ export default {
     digits_between: 'يجب أن يحتوي الحقل :attribute بين :min و :max رقمًا/أرقام',
     email: 'يجب أن يكون :attribute عنوان بريد إلكتروني صحيح البُنية',
     ends_with: 'حقل :attribute يجب ان ينتهي بأحد القيم التالية :value.',
-    exists: ':value غير صالح :attribute.',
+    exists: 'الحقل :attribute غير موجود',
     gt: {
         number: 'حقل :attribute يجب ان يكون اكبر من :value.',
         string: 'حقل :attribute يجب ان يكون اكبر من :value حروفٍ/حرفًا.',
