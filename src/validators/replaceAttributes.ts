@@ -71,6 +71,13 @@ const replaceAttributes: ReplaceAttributeInterface = {
     },
 
     /**
+     * Replace all place-holders for the datetime rule.
+     */
+    replaceDatetime: function ({ message, parameters }: replaceAttributePayload): string {
+        return message.replace(':format', parameters[0])
+    },
+
+    /**
      *  Replace all place-holders for the declined_if rule.
      */
     replaceDeclinedIf: function ({ message, parameters, data, getDisplayableAttribute }: replaceAttributePayload): string {
@@ -115,9 +122,23 @@ const replaceAttributes: ReplaceAttributeInterface = {
     },
 
     /**
+     * Replace all place-holders for the exists rule.
+     */
+    replaceExists: function ({ message, parameters, data }: replaceAttributePayload): string {
+        return message.replace(':value', data[parameters[1]])
+    },
+
+    /**
      * Replace all place-holders for the in rule.
      */
     replaceIn: function ({ message, parameters }: replaceAttributePayload): string {
+        return message.replace(':values', parameters.join(', '))
+    },
+
+    /**
+     * Replace all place-holders for the not_includes rule.
+     */
+    replaceIncludes: function ({ message, parameters }: replaceAttributePayload): string {
         return message.replace(':values', parameters.join(', '))
     },
 
@@ -140,6 +161,13 @@ const replaceAttributes: ReplaceAttributeInterface = {
      */
     replaceMax: function ({ message, parameters }: replaceAttributePayload): string {
         return message.replace(':max', parameters[0])
+    },
+
+    /**
+     * Replace all place-holders for the not_includes rule.
+     */
+    replaceNotIncludes: function ({ message, parameters }: replaceAttributePayload): string {
+        return message.replace(':values', parameters.join(', '))
     },
 
     /**
@@ -248,6 +276,14 @@ const replaceAttributes: ReplaceAttributeInterface = {
     replaceSize: function ({ message, parameters }: replaceAttributePayload): string {
         return message.replace(':size', parameters[0])
     },
+
+    /**
+     * Replace all place-holders for the unique rule.
+     */
+    replaceUnique: function ({ message, parameters, data }: replaceAttributePayload): string {
+        return message.replace(':value', data[parameters[1]])
+    },
+
 }
 
 export default replaceAttributes

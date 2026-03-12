@@ -93,7 +93,6 @@ export function getMessage (
     hasNumericRule: boolean,
     lang: string
 ): string {
-
     // check if error exists inside the custom message object provided by the user
     const inlineMessage: string | null = getCustomMessage(attributes, rule, customMessages, getMesageType(value, hasNumericRule), lang)
 

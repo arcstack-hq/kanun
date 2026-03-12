@@ -89,7 +89,7 @@ describe('Register Rule', function () {
         const validator = make()
 
         it('Passing invalid data to the required_if_type rule should fail', function () {
-            validator.setData({ first: 'Jad' }).setRules({ last: 'required_if_type:first,string' })
+            validator.setData({ first: 'Jad' }).setRules({ last: 'required_if_type:first,string' } as never)
             assert.equal(validator.validate(), false)
         })
         it('An Error message should be returned in case of failure', function () {
@@ -176,11 +176,11 @@ describe('Create Custom rule using class notation', function () {
         })
 
         it('Passing invalid data to the RequiredIfType rule class should fail', function () {
-            validator.setData({ first: 'Jad' }).setRules({ last: new RequiredIfType('first', 'string') })
+            validator.setData({ first: 'Jad' }).setRules({ last: new RequiredIfType('first', 'string') } as never)
             assert.equal(validator.validate(), false)
         })
         it('An Error message should be returned in case of failure', function () {
-            validator.setData({ first: 'Jad' }).setRules({ last: new RequiredIfType('first', 'string') })
+            validator.setData({ first: 'Jad' }).setRules({ last: new RequiredIfType('first', 'string') } as never)
             validator.validate()
             assert.equal(validator.errors().first(), 'The last is required when first is of type string.')
         })

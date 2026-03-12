@@ -18,6 +18,7 @@ export default {
     boolean: 'يجب أن تكون قيمة الحقل :attribute إما true أو false',
     confirmed: 'حقل التأكيد غير مُطابق للحقل :attribute',
     date: 'الحقل :attribute ليس تاريخًا صحيحًا',
+    datetime: 'الحقل :attribute يجب أن يكون تاريخًا صالحًا يطابق الصيغة :format.',
     date_equals: 'لا يساوي الحقل :attribute مع :date.',
     declined: 'يجب رفض الحقل :attribute',
     declined_if: 'الحقل :attribute مرفوض في حال ما إذا كان :other يساوي :value.',
@@ -26,6 +27,7 @@ export default {
     digits_between: 'يجب أن يحتوي الحقل :attribute بين :min و :max رقمًا/أرقام',
     email: 'يجب أن يكون :attribute عنوان بريد إلكتروني صحيح البُنية',
     ends_with: 'حقل :attribute يجب ان ينتهي بأحد القيم التالية :value.',
+    exists: ':value غير صالح :attribute.',
     gt: {
         number: 'حقل :attribute يجب ان يكون اكبر من :value.',
         string: 'حقل :attribute يجب ان يكون اكبر من :value حروفٍ/حرفًا.',
@@ -38,7 +40,9 @@ export default {
         array: 'حقل :attribute يجب ان يحتوي علي :value عناصر/عنصر او اكثر.',
         object: 'حقل :attribute يجب ان يحتوي علي :value عناصر/عنصر او اكثر.',
     },
+    hex: 'الحقل :attribute يجب أن يكون لونًا سداسيًا صالحًا.',
     in: 'الحقل :attribute غير صالح',
+    includes: 'الحقل :attribute يجب أن يحتوي على أحد القيم التالية: :values.',
     integer: 'يجب أن يكون الحقل :attribute عددًا صحيحًا',
     json: 'يجب أن يكون الحقل :attribute نصا من نوع JSON.',
     lt: {
@@ -67,6 +71,7 @@ export default {
     },
     not_in: 'الحقل :attribute غير صالح',
     not_regex: 'الحقل :attribute نوعه غير صالح',
+    not_includes: 'الحقل :attribute يجب ألا يحتوي على أي من القيم التالية: :values.',
     numeric: 'يجب على الحقل :attribute أن يكون رقمًا',
     object: 'الحقل :attribute يجب ان يكون من نوع object.',
     password: {
@@ -99,5 +104,6 @@ export default {
         object: 'يجب أن يحتوي الحقل :attribute على :size عنصرٍ/عناصر بالظبط',
     },
     string: 'يجب أن يكون الحقل :attribute نصآ.',
+    unique: 'الحقل :attribute مستخدم بالفعل.',
     url: 'صيغة الرابط :attribute غير صحيحة',
 }

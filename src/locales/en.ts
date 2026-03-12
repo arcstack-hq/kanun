@@ -19,6 +19,7 @@ export default {
     boolean: 'The :attribute field must be true or false.',
     confirmed: 'The :attribute confirmation does not match.',
     date: 'The :attribute is not a valid date.',
+    datetime: 'The :attribute must be a valid date matching the format :format.',
     date_equals: 'The :attribute must be a date equal to :date.',
     declined: 'The :attribute must be declined.',
     declined_if: 'The :attribute must be declined when :other is :value.',
@@ -27,6 +28,7 @@ export default {
     digits_between: 'The :attribute must be between :min and :max digits.',
     email: 'The :attribute must be a valid email address.',
     ends_with: 'The :attribute must end with one of the following: :values.',
+    exists: ':value is not a valid :attribute.',
     gt: {
         number: 'The :attribute must be greater than :value.',
         string: 'The :attribute must be greater than :value characters.',
@@ -39,7 +41,9 @@ export default {
         array: 'The :attribute must have :value items or more.',
         object: 'The :attribute must have :value items or more.',
     },
+    hex: 'The :attribute must be a valid hexadecimal color.',
     in: 'The :attribute must be one of the following :values.',
+    includes: 'The :attribute must include one of the following values: :values.',
     integer: 'The :attribute must be an integer.',
     json: 'The :attribute must be a valid JSON string.',
     lt: {
@@ -68,6 +72,7 @@ export default {
     },
     not_in: 'The selected :attribute is invalid.',
     not_regex: 'The :attribute format is invalid.',
+    not_includes: 'The :attribute must not include any of the following values: :values.',
     numeric: 'The :attribute must be a number.',
     object: 'The :attribute must be an object.',
     password: {
@@ -100,5 +105,6 @@ export default {
         object: 'The :attribute must contain :size items.',
     },
     string: 'The :attribute must be a string.',
+    unique: 'The :attribute has already been taken.',
     url: 'The :attribute must have a valid URL format.',
 }

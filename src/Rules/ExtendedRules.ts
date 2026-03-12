@@ -1,6 +1,10 @@
 import { ValidationRule } from '../ValidationRule'
 import { ValidationRuleCallable } from 'src/Contracts/RuleBuilder'
 import type { Validator } from '../Validator'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import dayjs from 'dayjs'
+
+dayjs.extend(customParseFormat)
 
 export class ExtendedRules extends ValidationRule {
     /**
@@ -85,9 +89,9 @@ export class ExtendedRules extends ValidationRule {
                 }
 
                 try {
-                    return new Date(value).toISOString() === new Date(format).toISOString()
+                    return dayjs(value, format, true).isValid()
                 } catch {
-                    return !isNaN(Date.parse(value))
+                    return false
                 }
             },
             message: 'The :attribute must be a valid date matching the format :format.'

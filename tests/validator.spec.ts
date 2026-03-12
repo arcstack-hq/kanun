@@ -226,7 +226,7 @@ describe('Validator', () => {
             expect(result).toBe(true)
         })
 
-        it('not_includes: should validate hexadecimal format', async () => {
+        it('not_includes: should validate that a value is not included in a given list of values', async () => {
             const v = new Validator(
                 { choice: 'yam' },
                 { choice: 'not_includes:fish,egg' }
@@ -234,6 +234,17 @@ describe('Validator', () => {
 
             const result = await v.passes()
             expect(result).toBe(true)
+        })
+
+        it('not_includes: should return an error message', async () => {
+            const v = new Validator(
+                { choice: 'yam' },
+                { choice: 'not_includes:yam,egg' }
+            )
+
+            const result = await v.passes()
+            expect(v.errors().first('choice')).toBe('The choice must not include any of the following values: yam, egg.')
+            expect(result).toBe(false)
         })
 
         it('datetime: should validate datetime format', async () => {
@@ -246,6 +257,17 @@ describe('Validator', () => {
             expect(result).toBe(true)
         })
 
+        it('datetime: should fail for invalid datetime format', async () => {
+            const v = new Validator(
+                { date: '07-07-2025' },
+                { date: 'string|datetime:YYYY-MM-DD' }
+            )
+
+            const result = await v.passes()
+            expect(v.errors().first('date')).toBe('The date must be a valid date matching the format YYYY-MM-DD.')
+            expect(result).toBe(false)
+        })
+
         it('exists: the user should exist', async () => {
             const v = new Validator(
                 { username: 'legacy' },
@@ -254,6 +276,17 @@ describe('Validator', () => {
 
             const result = await v.passes()
             expect(result).toBe(true)
+        })
+
+        it('exists: the user should not exist', async () => {
+            const v = new Validator(
+                { username: 'nonexistent' },
+                { username: 'exists:users,username' }
+            ).database(driver)
+
+            const result = await v.passes()
+            expect(v.errors().first('username')).toBe('nonexistent is not a valid username.')
+            expect(result).toBe(false)
         })
 
         it('exists: should support ignore values', async () => {

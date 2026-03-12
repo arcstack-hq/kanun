@@ -19,6 +19,7 @@ export default {
     boolean: 'Le champ :attribute doit être vrai ou faux.',
     confirmed: 'La confirmation de :attribute ne correspond pas.',
     date: ':attribute n\'est pas une date valide.',
+    datetime: ':attribute doit être une date valide correspondant au format :format.',
     date_equals: ':attribute doit être une date égale à :date.',
     declined: ':attribute doit être refusé.',
     declined_if: ':attribute doit être refusé lorsque :other est :value.',
@@ -27,6 +28,7 @@ export default {
     digits_between: ':attribute doit contenir entre :min et :max chiffres.',
     email: ':attribute doit être une adresse e-mail valide.',
     ends_with: ':attribute doit se terminer par l\'une des valeurs suivantes : :values.',
+    exists: ':value n\'est pas un :attribute valide.',
     gt: {
         number: ':attribute doit être supérieur à :value.',
         string: ':attribute doit contenir plus de :value caractères.',
@@ -39,7 +41,9 @@ export default {
         array: ':attribute doit avoir :value éléments ou plus.',
         object: ':attribute doit avoir :value éléments ou plus.',
     },
+    hex: ':attribute doit être une couleur hexadécimale valide.',
     in: ':attribute doit être l\'une des valeurs suivantes : :values.',
+    includes: ':attribute doit inclure l\'une des valeurs suivantes : :values.',
     integer: ':attribute doit être un entier.',
     json: ':attribute doit être une chaîne JSON valide.',
     lt: {
@@ -68,6 +72,7 @@ export default {
     },
     not_in: 'La valeur sélectionnée pour :attribute n\'est pas valide.',
     not_regex: 'Le format de :attribute n\'est pas valide.',
+    not_includes: ':attribute doit ne pas inclure l\'une des valeurs suivantes : :values.',
     numeric: ':attribute doit être un nombre.',
     object: ':attribute doit être un objet.',
     password: {
@@ -100,5 +105,6 @@ export default {
         object: ':attribute doit contenir :size éléments.',
     },
     string: ':attribute doit être une chaîne de caractères.',
+    unique: ':attribute a déjà été pris.',
     url: ':attribute doit avoir un format d\'URL valide.',
 }

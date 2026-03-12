@@ -201,14 +201,18 @@ export interface ReplaceAttributeInterface {
     replaceAfterOrEqual: (payload: replaceAttributePayload) => string;
     replaceBetween: (payload: replaceAttributePayload) => string;
     replaceDateEquals: (payload: replaceAttributePayload) => string;
+    replaceDatetime: (payload: replaceAttributePayload) => string;
     replaceDeclinedIf: (payload: replaceAttributePayload) => string;
     replaceDigits: (payload: replaceAttributePayload) => string;
     replaceDigitsBetween: (payload: replaceAttributePayload) => string;
     replaceDifferent: (payload: replaceAttributePayload) => string;
     replaceEndsWith: (payload: replaceAttributePayload) => string;
+    replaceExists: (payload: replaceAttributePayload) => string;
     replaceIn: (payload: replaceAttributePayload) => string;
+    replaceIncludes: (payload: replaceAttributePayload) => string;
     replaceMin: (payload: replaceAttributePayload) => string;
     replaceMax: (payload: replaceAttributePayload) => string;
+    replaceNotIncludes: (payload: replaceAttributePayload) => string;
     replaceRequiredWith: (payload: replaceAttributePayload) => string;
     replaceRequiredWithAll: (payload: replaceAttributePayload) => string;
     replaceRequiredWithout: (payload: replaceAttributePayload) => string;
@@ -222,6 +226,7 @@ export interface ReplaceAttributeInterface {
     replaceRequiredUnless: (payload: replaceAttributePayload) => string;
     replaceSame: (payload: replaceAttributePayload) => string;
     replaceSize: (payload: replaceAttributePayload) => string;
+    replaceUnique: (payload: replaceAttributePayload) => string;
 };
 
 export type ValidationCallback = (
