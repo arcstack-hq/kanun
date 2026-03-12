@@ -285,7 +285,7 @@ describe('Validator', () => {
             ).database(driver)
 
             const result = await v.passes()
-            expect(v.errors().first('username')).toBe('nonexistent is not a valid username.')
+            expect(v.errors().first('username')).toBe('The selected username is invalid.')
             expect(result).toBe(false)
         })
 
